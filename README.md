@@ -1,6 +1,17 @@
 # Who's the Spy 🕵️
 
 A pass-and-play party game for 4–8 friends on one phone. One secret place. Someone's lying.
+Also in Bulgarian: **Кой е шпионинът?**
+
+## Features
+
+- **Two modes:** Classic (the spy knows they're the spy) and Undercover (the spy gets a similar place and doesn't know it)
+- **88 places** in 3 packs (Classic, Bulgaria, Chaos) + Mix all, and **custom packs** you write yourself
+- **English / Bulgarian**, auto-detected from the phone's language
+- 1 spy, or a secret 1–2 spies; spy's guess list of 15 places or the full pack
+- Question prompts, peek, pause, drumroll reveals, match scoring
+- End-of-match **awards** and a shareable **result image** for Instagram stories
+- Installs like an app and works offline
 
 ## Put it online (GitHub Pages)
 

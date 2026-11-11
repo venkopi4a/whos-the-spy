@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Who's the Spy</title>
 <meta name="theme-color" content="#0f1a2a">
-<meta name="description" content="Who's the Spy: a pass-and-play party game for 4–8 friends on one phone. One secret place. Someone's lying.">
+<meta name="description" content="Who's the Spy / Кой е шпионинът? A pass-and-play party game for 4–8 friends on one phone. One secret place. Someone's lying.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -158,6 +158,38 @@ background:radial-gradient(circle at 50% 45%,#2a4777 0,#16263f 70%);display:flex
 #toast.on{transform:translate(-50%,0)}
 .good{color:var(--ok)}.bad{color:var(--spy)}
 @media (prefers-reduced-motion:reduce){.fi{transition:none}.applogo,.logo,.center .em,.cards .cw,.ring .tm,.drum .bav,#app.shake,.pod,.qcard{animation:none!important}#fx{display:none}}
+
+/* v5 additions */
+.rg{display:flex;gap:8px}
+.tbar .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.78rem;padding:8px 2px;min-height:58px}
+.tbar .btn .i{font-size:1.25rem;line-height:1}
+.tin{width:100%;font:inherit;font-size:1rem;padding:14px 12px;border-radius:12px;border:1px solid var(--line);background:var(--deep);color:var(--text);-webkit-user-select:text;user-select:text}
+.prow .pnum{width:22px;text-align:center;color:var(--mute);font-weight:700;flex:none}
+.pack.new{border-style:dashed;color:var(--mute);align-items:center;justify-content:center;text-align:center}
+.pack.new .pi{color:var(--accent)}
+.list.ro .chip{cursor:default}
+.steps b{color:var(--text)}
+.spyhad{margin-top:6px}.spyhad b{color:var(--text)}
+.aw{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(240,183,62,.08);border:1px solid rgba(240,183,62,.35);animation:pop .4s ease both}
+.aw .ai{font-size:1.9rem;flex:none}.aw b{display:block;color:var(--accent)}.aw small{color:var(--mute)}
+input::placeholder{color:#5d7090}
+@media (prefers-reduced-motion:reduce){.aw{animation:none}}
+
+/* v5 additions */
+.rg{display:flex;gap:8px}
+.tbar .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.78rem;padding:8px 2px;min-height:58px}
+.tbar .btn .i{font-size:1.25rem;line-height:1}
+.tin{width:100%;font:inherit;font-size:1rem;padding:14px 12px;border-radius:12px;border:1px solid var(--line);background:var(--deep);color:var(--text);-webkit-user-select:text;user-select:text}
+.prow .pnum{width:22px;text-align:center;color:var(--mute);font-weight:700;flex:none}
+.pack.new{border-style:dashed;color:var(--mute);align-items:center;justify-content:center;text-align:center}
+.pack.new .pi{color:var(--accent)}
+.list.ro .chip{cursor:default}
+.steps b{color:var(--text)}
+.spyhad{margin-top:6px}.spyhad b{color:var(--text)}
+.aw{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(240,183,62,.08);border:1px solid rgba(240,183,62,.35);animation:pop .4s ease both}
+.aw .ai{font-size:1.9rem;flex:none}.aw b{display:block;color:var(--accent)}.aw small{color:var(--mute)}
+input::placeholder{color:#5d7090}
+@media (prefers-reduced-motion:reduce){.aw{animation:none}}
 </style>
 </head>
 <body>
@@ -166,78 +198,222 @@ background:radial-gradient(circle at 50% 45%,#2a4777 0,#16263f 70%);display:flex
 <div id="toast" role="status"></div>
 <script>
 // ---------- CONTENT ----------
-const PACKS={
-classic:{name:"Classic",icon:"🌍",p:[["Beach", "🏖️"], ["School", "🏫"], ["Hospital", "🏥"], ["Airport", "✈️"], ["Supermarket", "🛒"], ["Cinema", "🎬"], ["Gym", "🏋️"], ["Zoo", "🦁"], ["Restaurant", "🍝"], ["Train station", "🚆"], ["Library", "📚"], ["Farm", "🚜"], ["Mountains", "⛰️"], ["Swimming pool", "🏊"], ["Bank", "🏦"], ["Police station", "🚓"], ["Hotel", "🏨"], ["Cruise ship", "🛳️"], ["Amusement park", "🎢"], ["Football stadium", "🏟️"], ["Hairdresser", "💇"], ["Car wash", "🧽"], ["Office", "💼"], ["Museum", "🖼️"], ["Bowling alley", "🎳"], ["Petrol station", "⛽"], ["Aquarium", "🐠"], ["Fire station", "🚒"], ["Pharmacy", "💊"], ["Nightclub", "🪩"], ["Bakery", "🥐"], ["Dentist", "🦷"], ["Theatre", "🎭"], ["Playground", "🛝"], ["Laundromat", "🧺"], ["Furniture store", "🛋️"]]},
-bg:{name:"Bulgaria",icon:"🇧🇬",p:[["Vitosha", "🏔️"], ["Sunny Beach", "🏖️"], ["Rila Monastery", "⛪"], ["Sofia metro", "🚇"], ["Bansko ski slope", "🎿"], ["Plovdiv Old Town", "🏛️"], ["Grandma's village house", "🏡"], ["Mehana", "🍷"], ["Open-air market", "🥕"], ["Bulgarian wedding", "💍"], ["Grill house", "🍖"], ["Black Sea camping", "⛺"], ["Seven Rila Lakes", "🏞️"], ["Belogradchik Rocks", "🪨"], ["Alexander Nevsky Cathedral", "🔔"], ["NDK", "🏢"], ["Varna Sea Garden", "🌳"], ["Rose Valley", "🌹"], ["Nessebar Old Town", "🏘️"], ["Buzludzha", "🛸"], ["Kukeri festival", "👹"], ["Rakia distillery", "🥃"], ["Marshrutka", "🚐"], ["Panel block", "🏚️"], ["Mineral spa", "♨️"], ["Banitsa bakery", "🥧"]]},
-chaos:{name:"Chaos",icon:"🤪",p:[["Pirate ship", "🏴‍☠️"], ["Space station", "🚀"], ["Haunted house", "👻"], ["Prison", "🔒"], ["Circus", "🎪"], ["Music festival", "🎧"], ["Zombie apocalypse", "🧟"], ["Dinosaur park", "🦖"], ["Submarine", "⚓"], ["Casino", "🎰"], ["Kids' birthday party", "🎂"], ["Talent show", "🎤"], ["Wizard school", "🧙"], ["Superhero HQ", "🦸"], ["Volcano lair", "🌋"], ["Desert island", "🏝️"], ["Medieval castle", "🏰"], ["Wild West saloon", "🤠"], ["Alien spaceship", "👽"], ["Ninja dojo", "🥷"], ["Candy factory", "🍭"], ["Underwater city", "🧜"], ["Jungle expedition", "🌴"], ["Reality TV house", "📺"], ["Santa's workshop", "🎅"], ["Viking raid", "⚔️"]]}
+const PACKS={"classic": {"name": {"en": "Classic", "bg": "Класика"}, "icon": "🌍", "p": [{"e": "🏖️", "en": "Beach", "bg": "Плаж"}, {"e": "🏫", "en": "School", "bg": "Училище"}, {"e": "🏥", "en": "Hospital", "bg": "Болница"}, {"e": "✈️", "en": "Airport", "bg": "Летище"}, {"e": "🛒", "en": "Supermarket", "bg": "Супермаркет"}, {"e": "🎬", "en": "Cinema", "bg": "Кино"}, {"e": "🏋️", "en": "Gym", "bg": "Фитнес"}, {"e": "🦁", "en": "Zoo", "bg": "Зоопарк"}, {"e": "🍝", "en": "Restaurant", "bg": "Ресторант"}, {"e": "🚆", "en": "Train station", "bg": "Гара"}, {"e": "📚", "en": "Library", "bg": "Библиотека"}, {"e": "🚜", "en": "Farm", "bg": "Ферма"}, {"e": "⛰️", "en": "Mountains", "bg": "Планина"}, {"e": "🏊", "en": "Swimming pool", "bg": "Басейн"}, {"e": "🏦", "en": "Bank", "bg": "Банка"}, {"e": "🚓", "en": "Police station", "bg": "Полицейско управление"}, {"e": "🏨", "en": "Hotel", "bg": "Хотел"}, {"e": "🛳️", "en": "Cruise ship", "bg": "Круизен кораб"}, {"e": "🎢", "en": "Amusement park", "bg": "Увеселителен парк"}, {"e": "🏟️", "en": "Football stadium", "bg": "Футболен стадион"}, {"e": "💇", "en": "Hairdresser", "bg": "Фризьорски салон"}, {"e": "🧽", "en": "Car wash", "bg": "Автомивка"}, {"e": "💼", "en": "Office", "bg": "Офис"}, {"e": "🖼️", "en": "Museum", "bg": "Музей"}, {"e": "🎳", "en": "Bowling alley", "bg": "Боулинг зала"}, {"e": "⛽", "en": "Petrol station", "bg": "Бензиностанция"}, {"e": "🐠", "en": "Aquarium", "bg": "Аквариум"}, {"e": "🚒", "en": "Fire station", "bg": "Пожарна"}, {"e": "💊", "en": "Pharmacy", "bg": "Аптека"}, {"e": "🪩", "en": "Nightclub", "bg": "Нощен клуб"}, {"e": "🥐", "en": "Bakery", "bg": "Пекарна"}, {"e": "🦷", "en": "Dentist", "bg": "Зъболекар"}, {"e": "🎭", "en": "Theatre", "bg": "Театър"}, {"e": "🛝", "en": "Playground", "bg": "Детска площадка"}, {"e": "🧺", "en": "Laundromat", "bg": "Обществена пералня"}, {"e": "🛋️", "en": "Furniture store", "bg": "Мебелен магазин"}]}, "bg": {"name": {"en": "Bulgaria", "bg": "България"}, "icon": "🇧🇬", "p": [{"e": "🏔️", "en": "Vitosha", "bg": "Витоша"}, {"e": "🏖️", "en": "Sunny Beach", "bg": "Слънчев бряг"}, {"e": "⛪", "en": "Rila Monastery", "bg": "Рилски манастир"}, {"e": "🚇", "en": "Sofia metro", "bg": "Софийско метро"}, {"e": "🎿", "en": "Bansko ski slope", "bg": "Ски писта в Банско"}, {"e": "🏛️", "en": "Plovdiv Old Town", "bg": "Старият Пловдив"}, {"e": "🏡", "en": "Grandma's village house", "bg": "Къщата на баба на село"}, {"e": "🍷", "en": "Mehana", "bg": "Механа"}, {"e": "🥕", "en": "Open-air market", "bg": "Пазар"}, {"e": "💍", "en": "Bulgarian wedding", "bg": "Българска сватба"}, {"e": "🍖", "en": "Grill house", "bg": "Скара бира"}, {"e": "⛺", "en": "Black Sea camping", "bg": "Къмпинг на морето"}, {"e": "🏞️", "en": "Seven Rila Lakes", "bg": "Седемте рилски езера"}, {"e": "🪨", "en": "Belogradchik Rocks", "bg": "Белоградчишките скали"}, {"e": "🔔", "en": "Alexander Nevsky Cathedral", "bg": "Храм „Александър Невски“"}, {"e": "🏢", "en": "NDK", "bg": "НДК"}, {"e": "🌳", "en": "Varna Sea Garden", "bg": "Морската градина във Варна"}, {"e": "🌹", "en": "Rose Valley", "bg": "Розовата долина"}, {"e": "🏘️", "en": "Nessebar Old Town", "bg": "Старият Несебър"}, {"e": "🛸", "en": "Buzludzha", "bg": "Бузлуджа"}, {"e": "👹", "en": "Kukeri festival", "bg": "Кукерски фестивал"}, {"e": "🥃", "en": "Rakia distillery", "bg": "Казан за ракия"}, {"e": "🚐", "en": "Marshrutka", "bg": "Маршрутка"}, {"e": "🏚️", "en": "Panel block", "bg": "Панелка"}, {"e": "♨️", "en": "Mineral spa", "bg": "Минерален СПА"}, {"e": "🥧", "en": "Banitsa bakery", "bg": "Баничарница"}]}, "chaos": {"name": {"en": "Chaos", "bg": "Хаос"}, "icon": "🤪", "p": [{"e": "🏴‍☠️", "en": "Pirate ship", "bg": "Пиратски кораб"}, {"e": "🚀", "en": "Space station", "bg": "Космическа станция"}, {"e": "👻", "en": "Haunted house", "bg": "Къща с духове"}, {"e": "🔒", "en": "Prison", "bg": "Затвор"}, {"e": "🎪", "en": "Circus", "bg": "Цирк"}, {"e": "🎧", "en": "Music festival", "bg": "Музикален фестивал"}, {"e": "🧟", "en": "Zombie apocalypse", "bg": "Зомби апокалипсис"}, {"e": "🦖", "en": "Dinosaur park", "bg": "Парк с динозаври"}, {"e": "⚓", "en": "Submarine", "bg": "Подводница"}, {"e": "🎰", "en": "Casino", "bg": "Казино"}, {"e": "🎂", "en": "Kids' birthday party", "bg": "Детски рожден ден"}, {"e": "🎤", "en": "Talent show", "bg": "Шоу за таланти"}, {"e": "🧙", "en": "Wizard school", "bg": "Училище за магьосници"}, {"e": "🦸", "en": "Superhero HQ", "bg": "Щаб на супергерои"}, {"e": "🌋", "en": "Volcano lair", "bg": "Бърлога във вулкан"}, {"e": "🏝️", "en": "Desert island", "bg": "Необитаем остров"}, {"e": "🏰", "en": "Medieval castle", "bg": "Средновековен замък"}, {"e": "🤠", "en": "Wild West saloon", "bg": "Салун в Дивия запад"}, {"e": "👽", "en": "Alien spaceship", "bg": "Извънземен кораб"}, {"e": "🥷", "en": "Ninja dojo", "bg": "Нинджа школа"}, {"e": "🍭", "en": "Candy factory", "bg": "Фабрика за бонбони"}, {"e": "🧜", "en": "Underwater city", "bg": "Подводен град"}, {"e": "🌴", "en": "Jungle expedition", "bg": "Експедиция в джунглата"}, {"e": "📺", "en": "Reality TV house", "bg": "Риалити къща"}, {"e": "🎅", "en": "Santa's workshop", "bg": "Работилницата на Дядо Коледа"}, {"e": "⚔️", "en": "Viking raid", "bg": "Викингски набег"}]}};
+const TW=[["Beach", "Swimming pool"], ["School", "Playground"], ["Library", "Museum"], ["Hospital", "Pharmacy"], ["Airport", "Cruise ship"], ["Train station", "Petrol station"], ["Supermarket", "Furniture store"], ["Cinema", "Theatre"], ["Gym", "Football stadium"], ["Zoo", "Aquarium"], ["Restaurant", "Bakery"], ["Farm", "Mountains"], ["Bank", "Office"], ["Police station", "Fire station"], ["Hairdresser", "Dentist"], ["Car wash", "Laundromat"], ["Bowling alley", "Amusement park"], ["Nightclub", "Hotel"], ["Vitosha", "Seven Rila Lakes"], ["Sunny Beach", "Black Sea camping"], ["Rila Monastery", "Alexander Nevsky Cathedral"], ["Sofia metro", "Marshrutka"], ["Bansko ski slope", "Mineral spa"], ["Plovdiv Old Town", "Nessebar Old Town"], ["Grandma's village house", "Panel block"], ["Mehana", "Grill house"], ["Open-air market", "Banitsa bakery"], ["Bulgarian wedding", "Kukeri festival"], ["Belogradchik Rocks", "Buzludzha"], ["NDK", "Varna Sea Garden"], ["Rose Valley", "Rakia distillery"], ["Pirate ship", "Viking raid"], ["Space station", "Alien spaceship"], ["Haunted house", "Wizard school"], ["Prison", "Reality TV house"], ["Circus", "Kids' birthday party"], ["Music festival", "Talent show"], ["Zombie apocalypse", "Desert island"], ["Dinosaur park", "Jungle expedition"], ["Submarine", "Underwater city"], ["Casino", "Wild West saloon"], ["Superhero HQ", "Volcano lair"], ["Candy factory", "Santa's workshop"], ["Ninja dojo", "Medieval castle"]];
+const POOL=[["🚽", "Toilet Steve", "Кенефа Стефчо"], ["🦆", "Duck Lips", "Патешки Устни"], ["🍗", "Lord Nugget", "Лорд Хапка"], ["🥵", "Sweaty Pete", "Потния Пешо"], ["🥄", "Big Spoon", "Голямата Лъжица"], ["💦", "Moist Carl", "Мокрия Кольо"], ["🐐", "Goat Brain", "Козия Мозък"], ["🥚", "Wobbly Egg", "Клатещото Яйце"], ["🧦", "Stinky Sock", "Смрадливия Чорап"], ["🐌", "Speedy Snail", "Бързия Охлюв"], ["🥒", "Pickle Pants", "Кисела Краставица"], ["🧻", "Paper Paul", "Хартиения Павел"], ["🐷", "Piggy Sue", "Прасчо Сузи"], ["🤡", "Bonkers Bob", "Чалнатия Бобо"], ["🥔", "Couch Potato", "Диванния Картоф"], ["🍝", "Spaghetti Legs", "Спагетените Крака"], ["🐸", "Froggy Frank", "Жабока Франк"], ["🧀", "Cheesy Chad", "Кашкавалчо"], ["🍌", "Banana Brain", "Бананова Глава"], ["🦖", "Tiny Rex", "Мъничкия Рекс"], ["🌭", "Hot Dog Hank", "Кренвирша Христо"], ["🧠", "Big Brain Barry", "Мозъчко Борко"], ["🪱", "Worm Boy", "Червейчо"], ["🐙", "Octo Mom", "Мама Октопод"], ["🦩", "Flamingo Phil", "Фламинго Филип"], ["🦷", "Tooth Gary", "Зъбчо Гошо"]];
+const QS={"en": ["What do you usually wear here?", "How did you get here today?", "What's the first thing you do when you arrive?", "Would you bring your grandma here?", "What does it smell like?", "Is it loud or quiet here?", "How much money should I bring?", "Would you come here on a first date?", "What time of day is best to come?", "Who's the most annoying person here?", "Could you fall asleep here?", "What would you buy here?", "Is it dangerous here?", "What's the weather like where we are?", "Would a dog enjoy it here?", "How long do people usually stay?", "What's your favourite part of being here?", "What goes wrong here on a bad day?", "Would you post this place on Instagram?", "Do you need special skills to be here?", "What sound do you hear right now?", "Is it bigger than a football field?", "Would you come here alone?", "What do you eat here?", "Who would you never want to meet here?", "Can kids come here?", "Do you have to be quiet here?", "What would you hate to forget at home?"], "bg": ["Какво обикновено носиш тук?", "Как стигна дотук днес?", "Какво правиш първо, като пристигнеш?", "Би ли довел баба си тук?", "Как мирише тук?", "Шумно ли е тук или тихо?", "Колко пари да си взема?", "Би ли дошъл тук на първа среща?", "По кое време е най-добре да се дойде?", "Кой е най-досадният човек тук?", "Можеш ли да заспиш тук?", "Какво би си купил тук?", "Опасно ли е тук?", "Какво е времето там, където сме?", "Би ли харесало на куче тук?", "Колко време стоят хората тук обикновено?", "Кое ти е любимото тук?", "Какво се обърква тук в лош ден?", "Би ли качил това място в Instagram?", "Трябват ли специални умения, за да си тук?", "Какъв звук чуваш в момента?", "По-голямо ли е от футболно игрище?", "Би ли дошъл тук сам?", "Какво се яде тук?", "Кого никога не би искал да срещнеш тук?", "Могат ли деца да идват тук?", "Трябва ли да си тих тук?", "Какво би мразил да си забравил вкъщи?"]};
+const WS={"en": ["The spy fooled everyone. Suspiciously well.", "Nobody suspected a thing. Embarrassing.", "Spy level: international.", "Trust no one. Especially them."], "bg": ["Шпионинът изигра всички. Подозрително добре.", "Никой нищо не заподозря. Срамота.", "Ниво на шпионаж: международно.", "Не вярвай на никого. Особено на тях."]};
+const WI={"en": ["Detectives! Absolute legends.", "The spy has been exposed. Dramatically.", "Nothing gets past this table.", "Sherlock would be proud."], "bg": ["Детективи! Истински легенди.", "Шпионинът е разкрит. Драматично.", "Нищо не минава покрай тази маса.", "Шерлок би се гордял."]};
+const TUT={"en": [["📱", "Pass the phone", "Each player taps a face-down card in secret, then passes the phone on."], ["🗺️", "Everyone knows the place… almost", "Everyone sees the same secret place. The spy only sees that they're the spy."], ["💬", "Ask sneaky questions", "Take turns asking each other questions. Prove you know the place without saying it. The spy can check 📋 Places to see every possible place."], ["🗳️", "Catch the spy", "Vote someone out when you're ready. A caught spy can still win by guessing the place, and the spy can try a guess at any time."]], "bg": [["📱", "Подай телефона", "Всеки играч тайно избира карта с гръб нагоре и подава телефона нататък."], ["🗺️", "Всички знаят мястото… почти", "Всички виждат едно и също тайно място. Шпионинът вижда само, че е шпионин."], ["💬", "Задавай хитри въпроси", "Редувайте се да си задавате въпроси. Докажи, че знаеш мястото, без да го казваш. Шпионинът може да отвори 📋 Места, за да види всички възможни места."], ["🗳️", "Хванете шпионина", "Гласувайте, когато сте готови. Хванатият шпионин пак може да спечели, ако познае мястото, а може и да опита по всяко време."]]};
+const L={
+en:{title:"Who's the Spy?",tagline:"One phone. One secret place. Someone's lying.",
+players:"Players",names:"Names ✏️",spies:"Spies",oneSpy:"1 spy",twoSpies:"1–2 spies 🤫",
+twoDesc:"Each round has 1 or 2 spies at random. Nobody knows which, not even the spies.",oneDesc:"Exactly one spy every round.",
+mode:"Game mode",mClassic:"🕵️ Classic",mUnder:"🎭 Undercover",
+dClassic:"The spy knows they're the spy, but not the place.",dUnder:"The spy gets a similar place and doesn't even know they're the spy.",
+places:"Places",nPlaces:n=>n+" places",mix:"Mix all",newPack:"New pack",editThis:"✏️ Edit this pack",
+list:"Spy's guess list",short:"15 places",full:"All places",
+dShort:"Easier for the spy: 15 random places each round.",dFull:"Harder for the spy: every place in the pack.",
+timer:"Round timer",min:m=>m+" min",winAt:"Win the match at",pts:m=>m+" pts",
+scores:"Scores",nRounds:n=>n+(n===1?" round":" rounds"),reset:"Reset scores",
+play:"▶ Play",next:"▶ Next round",install:"📲 Install the app",
+needs5:"1–2 spies needs 5+ players",quitArm:"Tap ✕ again to quit this round",
+oneMin:"⏰ 1 minute left!",timeUp:"⏰ Time's up! Vote now.",notSpy:x=>"Not a spy! −1 point for "+x,
+installed:"Installed! Find it on your home screen.",installing:"Installing…",copied:"Copied! Paste it in your group chat.",noCopy:"Couldn't share",shuffled:"Shuffled!",
+saved:"Pack saved!",need4:"Add at least 4 places",delArm:"Tap again to delete",imgSaved:"Image saved. Post it anywhere!",wait:"One sec…",
+iosT:"Install on iPhone",ios1:"Open this page in <b>Safari</b>.",ios2:"Tap the <b>Share</b> button (square with an arrow ⬆️).",ios3:"Scroll down and tap <b>Add to Home Screen</b>.",
+iosN:"The game then opens full screen from your home screen and works offline.",gotIt:"Got it",
+namesT:"Players",done:"Done",namesHint:"Tap 🎲 for a silly name, or type real ones.",rndAll:"🎲 Randomize everyone",
+passTo:x=>"Pass the phone to<br>"+x,passSub:(a,b)=>`Card ${a} of ${b}. Nobody else should see the screen.`,imX:x=>`I'm ${x} 👋`,
+tapCard:x=>x+", tap a card",shuffle:"🔀 Shuffle the cards",lastCard:"Last card left. Tap it.",
+tip1:"Tap the card to flip it.",tip2:"Memorize it, then hide it.",hideIt:"Got it, hide it",tapFlip:"Tap to flip",
+youSpy:"You are the spy",spyDesc:"You don't know the place. Ask vague questions, listen for clues, and blend in.",
+placeIs:"The place is",prove:"Prove you know it without giving it away.",
+readyT:"Everyone's in!",readyD:"Put the phone in the middle where everyone can see it. The app picks who asks first.",
+readyU:"🎭 Someone has a slightly different place, and doesn't know it.",mystery:"🤫 1 or 2 spies. Nobody knows.",startClock:"⏱ Start the clock",
+asks:(a,b)=>`${a} asks ${b}`,nextQ:"🎲 Next question",
+bPlaces:"Places",bPeek:"Peek",bPause:"Pause",bResume:"Resume",bMin:"+1 min",
+voteNow:"🗳️ Vote now",spyNow:"🕵️ Spy? Guess the place now",
+possT:"Possible places",possD:"One of these is the secret place. The clock keeps running.",back:"← Back",
+peekT:"Who forgot their card?",peekD:"Take the phone, peek, and hide it again. The clock keeps running.",
+spyT:"Spy, who are you?",spyD:"Guess right and the spies win big (+3). Guess wrong and the innocents win. Tapping a non-spy costs that player a point.",
+peekHide:"Hide and go back",
+voteT:"Who's the spy?",voteAgain:"Vote again!",voteD:"On three, everyone points at a suspect. Tap whoever got the most fingers.",
+wasSpyQ:x=>`Was ${x} a spy?`,vSpy:"🕵️ SPY!",vInn:"😇 INNOCENT",wasSpy:x=>x+" was a spy!",wasInn:x=>x+" was innocent!",
+butWait:x=>`But wait. If ${x} guesses the place, the spies still win.`,givePhone:x=>`Give ${x} the phone`,seeRes:"See results",
+hadPlace:(x,p)=>`${x} had a different place: ${p}`,cont:"Continue",
+twistT:"Plot twist!",twistC:"That spy guessed wrong, but a second spy is still hiding among you.",twistU:"You caught one, but a second spy is still hiding among you.",twistB:"Find the other spy",
+whereX:x=>x+", where are we?",earlyD:"You called it. Guess right for +3.",lastD:"Last chance. Guess right and the spies still win.",
+spiesWin:"Spies win!",innWin:"Innocents win!",
+wWrongOut:x=>x+" was innocent. The spies got away.",wGuessRight:x=>x+" guessed the place!",wEarlyWrong:(x,p)=>`${x} guessed ${p} and got it wrong.`,
+wCaughtWrong:(x,p)=>`${x} was caught and guessed ${p}.`,wUnder:"Every spy was caught.",
+placeWas:"The place was",spyHad:"🎭 The spy had",whoWho:"Who was who",lSpy:"🕵️ Spy",lInn:"😇 Innocent",firstTo:n=>" · first to "+n,
+crown:"🏆 Crown the champion",share:"📤 Share",menu:"⚙️ Menu",endMatch:"🏁 End match & awards",
+champWins:x=>x+" wins!",champSub:"Champion of spies, liars and detectives.",newMatch:"🔁 New match",imgBtn:"📸 Share image",txtBtn:"📤 Share text",awardsT:"Awards",
+aLiar:"🕵️ Best liar",aMind:"🎯 Mind reader",aSus:"🤨 Most suspicious",aLoyal:"😇 Loyal citizen",
+dLiar:n=>`won ${n} ${n===1?"round":"rounds"} as the spy`,dMind:n=>`guessed the place ${n===1?"once":n+" times"}`,
+dSus:n=>`voted out ${n===1?"once":n+" times"} while innocent`,dLoyal:n=>`won ${n} ${n===1?"round":"rounds"} as an innocent`,
+brag:(x,n)=>`We just played Who's the Spy 🕵️ ${x} is winning with ${n} points. Can your crew catch the spy?`,
+imgChamp:"Champion",imgPlay:"Play free",ptsWord:n=>n===1?"pt":"pts",
+packNew:"New pack",packEdit:"Edit pack",packTip:"Inside jokes work best: your flat, your office, your favourite bar.",packName:"Pack name",
+packNamePh:"e.g. Our places",placePh:"e.g. Ivan's flat",addPlace:"＋ Add place",savePack:"Save pack",delPack:"Delete pack",myPack:"My pack",
+skip:"Skip",tutNext:"Next",letsPlay:"Let's play",round:n=>"Round "+n},
+bg:{title:"Кой е шпионинът?",tagline:"Един телефон. Едно тайно място. Някой лъже.",
+players:"Играчи",names:"Имена ✏️",spies:"Шпиони",oneSpy:"1 шпионин",twoSpies:"1–2 шпиони 🤫",
+twoDesc:"Всеки рунд има 1 или 2 шпиони на случаен принцип. Никой не знае колко, дори шпионите.",oneDesc:"Точно един шпионин всеки рунд.",
+mode:"Режим на игра",mClassic:"🕵️ Класически",mUnder:"🎭 Под прикритие",
+dClassic:"Шпионинът знае, че е шпионин, но не знае мястото.",dUnder:"Шпионинът получава подобно място и дори не знае, че е шпионин.",
+places:"Места",nPlaces:n=>n+" места",mix:"Всичко",newPack:"Нов пакет",editThis:"✏️ Редактирай пакета",
+list:"Списък за шпионина",short:"15 места",full:"Всички места",
+dShort:"По-лесно за шпионина: 15 случайни места всеки рунд.",dFull:"По-трудно за шпионина: всички места от пакета.",
+timer:"Таймер на рунда",min:m=>m+" мин",winAt:"Победа при",pts:m=>m+" т.",
+scores:"Точки",nRounds:n=>n+(n===1?" рунд":" рунда"),reset:"Нулирай точките",
+play:"▶ Играй",next:"▶ Следващ рунд",install:"📲 Инсталирай приложението",
+needs5:"1–2 шпиони изисква поне 5 играчи",quitArm:"Натисни ✕ отново, за да спреш рунда",
+oneMin:"⏰ Остава 1 минута!",timeUp:"⏰ Времето изтече! Гласувайте.",notSpy:x=>"Не е шпионин! −1 точка за "+x,
+installed:"Инсталирано! Намери го на началния екран.",installing:"Инсталиране…",copied:"Копирано! Пусни го в груповия чат.",noCopy:"Не стана",shuffled:"Разбъркано!",
+saved:"Пакетът е запазен!",need4:"Добави поне 4 места",delArm:"Натисни отново, за да изтриеш",imgSaved:"Картинката е запазена. Сподели я навсякъде!",wait:"Секунда…",
+iosT:"Инсталиране на iPhone",ios1:"Отвори страницата в <b>Safari</b>.",ios2:"Натисни бутона <b>Сподели</b> (квадрат със стрелка ⬆️).",ios3:"Превърти надолу и избери <b>Добави към началния екран</b>.",
+iosN:"Играта ще се отваря на цял екран от началния екран и работи без интернет.",gotIt:"Ясно",
+namesT:"Играчи",done:"Готово",namesHint:"Натисни 🎲 за смешно име или напиши истински.",rndAll:"🎲 Нови имена за всички",
+passTo:x=>"Подай телефона на<br>"+x,passSub:(a,b)=>`Карта ${a} от ${b}. Никой друг да не гледа екрана.`,imX:x=>`Аз съм ${x} 👋`,
+tapCard:x=>x+", избери карта",shuffle:"🔀 Разбъркай картите",lastCard:"Остана последната карта. Натисни я.",
+tip1:"Натисни картата, за да я обърнеш.",tip2:"Запомни я и я скрий.",hideIt:"Ясно, скрий я",tapFlip:"Натисни, за да обърнеш",
+youSpy:"Ти си шпионинът",spyDesc:"Не знаеш мястото. Задавай общи въпроси, слушай за улики и се слей с другите.",
+placeIs:"Мястото е",prove:"Докажи, че го знаеш, без да го издаваш.",
+readyT:"Всички са готови!",readyD:"Сложете телефона в средата, където всички го виждат. Приложението избира кой пита пръв.",
+readyU:"🎭 Някой има малко по-различно място и не го знае.",mystery:"🤫 1 или 2 шпиони. Никой не знае.",startClock:"⏱ Пусни часовника",
+asks:(a,b)=>`${a} пита ${b}`,nextQ:"🎲 Следващ въпрос",
+bPlaces:"Места",bPeek:"Виж",bPause:"Пауза",bResume:"Пусни",bMin:"+1 мин",
+voteNow:"🗳️ Гласувай",spyNow:"🕵️ Шпионин? Познай мястото сега",
+possT:"Възможни места",possD:"Едно от тях е тайното място. Часовникът продължава.",back:"← Назад",
+peekT:"Кой си забрави картата?",peekD:"Вземи телефона, погледни и я скрий отново. Часовникът продължава.",
+spyT:"Шпионин, кой си ти?",spyD:"Познаеш ли, шпионите печелят голямо (+3). Сбъркаш ли, печелят невинните. Ако се обади не-шпионин, той губи точка.",
+peekHide:"Скрий и се върни",
+voteT:"Кой е шпионинът?",voteAgain:"Гласувайте отново!",voteD:"На три всички посочват заподозрян. Натисни този, когото посочиха най-много.",
+wasSpyQ:x=>`${x} шпионин ли е?`,vSpy:"🕵️ ШПИОНИН!",vInn:"😇 НЕВИНЕН",wasSpy:x=>x+" е шпионин!",wasInn:x=>x+" е невинен!",
+butWait:x=>`Но чакайте. Ако ${x} познае мястото, шпионите пак печелят.`,givePhone:x=>`Дай телефона на ${x}`,seeRes:"Виж резултата",
+hadPlace:(x,p)=>`${x} имаше друго място: ${p}`,cont:"Продължи",
+twistT:"Обрат!",twistC:"Този шпионин сбърка, но още един се крие сред вас.",twistU:"Хванахте един, но още един шпионин се крие сред вас.",twistB:"Намерете другия шпионин",
+whereX:x=>x+", къде сме?",earlyD:"Ти рискува. Познай за +3.",lastD:"Последен шанс. Познаеш ли, шпионите пак печелят.",
+spiesWin:"Шпионите печелят!",innWin:"Невинните печелят!",
+wWrongOut:x=>x+" беше невинен. Шпионите се измъкнаха.",wGuessRight:x=>x+" позна мястото!",wEarlyWrong:(x,p)=>`${x} каза „${p}“ и сбърка.`,
+wCaughtWrong:(x,p)=>`${x} беше хванат и каза „${p}“.`,wUnder:"Всички шпиони са хванати.",
+placeWas:"Мястото беше",spyHad:"🎭 Шпионинът имаше",whoWho:"Кой какъв беше",lSpy:"🕵️ Шпионин",lInn:"😇 Невинен",firstTo:n=>" · до "+n,
+crown:"🏆 Обяви шампиона",share:"📤 Сподели",menu:"⚙️ Меню",endMatch:"🏁 Край на мача и награди",
+champWins:x=>x+" печели!",champSub:"Шампион на шпиони, лъжци и детективи.",newMatch:"🔁 Нов мач",imgBtn:"📸 Картинка",txtBtn:"📤 Текст",awardsT:"Награди",
+aLiar:"🕵️ Най-добър лъжец",aMind:"🎯 Ясновидец",aSus:"🤨 Най-подозрителен",aLoyal:"😇 Примерен гражданин",
+dLiar:n=>`спечели ${n} ${n===1?"рунд":"рунда"} като шпионин`,dMind:n=>`позна мястото ${n===1?"веднъж":n+" пъти"}`,
+dSus:n=>`изгонен ${n===1?"веднъж":n+" пъти"}, без да е шпионин`,dLoyal:n=>`спечели ${n} ${n===1?"рунд":"рунда"} като невинен`,
+brag:(x,n)=>`Току-що играхме „Кой е шпионинът?“ 🕵️ ${x} води с ${n} точки. Ще хване ли вашата компания шпионина?`,
+imgChamp:"Шампион",imgPlay:"Играй безплатно",ptsWord:n=>n===1?"точка":"точки",
+packNew:"Нов пакет",packEdit:"Редактирай пакета",packTip:"Най-добре работят вътрешните шеги: вашият апартамент, офисът, любимото заведение.",packName:"Име на пакета",
+packNamePh:"напр. Нашите места",placePh:"напр. Апартамента на Иван",addPlace:"＋ Добави място",savePack:"Запази пакета",delPack:"Изтрий пакета",myPack:"Моят пакет",
+skip:"Пропусни",tutNext:"Напред",letsPlay:"Да играем",round:n=>"Рунд "+n}
 };
-const POOL=[["🚽","Toilet Steve"],["🦆","Duck Lips"],["🍗","Lord Nugget"],["🥵","Sweaty Pete"],["🥄","Big Spoon"],["💦","Moist Carl"],["🐐","Goat Brain"],["🥚","Wobbly Egg"],
-["🧦","Stinky Sock"],["🐌","Speedy Snail"],["🥒","Pickle Pants"],["🧻","Paper Paul"],["🐷","Piggy Sue"],["🤡","Bonkers Bob"],["🥔","Couch Potato"],["🍝","Spaghetti Legs"],
-["🐸","Froggy Frank"],["🧀","Cheesy Chad"],["🍌","Banana Brain"],["🦖","Tiny Rex"],["🌭","Hot Dog Hank"],["🧠","Big Brain Barry"],["🪱","Worm Boy"],["🐙","Octo Mom"],["🦩","Flamingo Phil"],["🦷","Tooth Gary"]];
-const QS=["What do you usually wear here?","How did you get here today?","What's the first thing you do when you arrive?","Would you bring your grandma here?","What does it smell like?","Is it loud or quiet here?","How much money should I bring?","Would you come here on a first date?","What time of day is best to come?","Who's the most annoying person here?","Could you fall asleep here?","What would you buy here?","Is it dangerous here?","What's the weather like where we are?","Would a dog enjoy it here?","How long do people usually stay?","What's your favourite part of being here?","What goes wrong here on a bad day?","Would you post this place on Instagram?","Do you need special skills to be here?","What sound do you hear right now?","Is it bigger than a football field?","Would you come here alone?","What do you eat here?","Who would you never want to meet here?","Can kids come here?","Do you have to be quiet here?","What would you hate to forget at home?"];
-const WS=["The spy fooled everyone. Suspiciously well.","Nobody suspected a thing. Embarrassing.","Spy level: international.","Trust no one. Especially them."];
-const WI=["Detectives! Absolute legends.","The spy has been exposed. Dramatically.","Nothing gets past this table.","Sherlock would be proud."];
-const TUT=[["📱","Pass the phone","Each player taps a face-down card in secret, then passes the phone on."],
-["🗺️","Everyone knows the place… almost","Everyone sees the same secret place. The spy only sees that they're the spy."],
-["💬","Ask sneaky questions","Take turns asking each other questions. Prove you know the place without saying it. Stuck? The app suggests a question."],
-["🗳️","Catch the spy","Vote someone out when you're ready. A caught spy can still win by guessing the place, and the spy can try a guess at any time."]];
-
-// ---------- STATE ----------
-function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
-function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-const DEF={n:6,spyMode:1,mins:5,pack:"classic",target:7,sound:true,seen:false,players:POOL.slice(0,8).map(p=>({e:p[0],name:p[1]}))};
-let C=Object.assign({},DEF,ld("spy_cfg",{})||{});
-if(!Array.isArray(C.players)||C.players.length<8)C.players=DEF.players;
-if(!PACKS[C.pack]&&C.pack!=="mix")C.pack="classic";
-const save=()=>sv("spy_cfg",C);
-let S={screen:C.seen?"home":"tut",tut:0,scores:ld("spy_scores",null)||[0,0,0,0,0,0,0,0],round:ld("spy_round",0)};
-const saveM=()=>{sv("spy_scores",S.scores);sv("spy_round",S.round)};
-let tmr=null,AC=null,WL=null;
 
 // ---------- HELPERS ----------
 const $=id=>document.getElementById(id);
 const R=n=>Math.floor(Math.random()*n);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const rawName=i=>(C.players[i].name||"").trim()||"Player "+(i+1);
-const nm=i=>esc(rawName(i));
-const av=i=>C.players[i].e;
 const rng=n=>[...Array(n).keys()];
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=R(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
-const packInfo=k=>k==="mix"?{name:"Mix all",icon:"🎲"}:PACKS[k];
-const placesFor=k=>k==="mix"?Object.values(PACKS).flatMap(P=>P.p):(PACKS[k]||PACKS.classic).p;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function ld(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+const ALL=Object.values(PACKS).flatMap(P=>P.p);
+const byEn=Object.fromEntries(ALL.map(p=>[p.en,p]));
+const TWIN={};TW.forEach(([a,b])=>{TWIN[a]=b;TWIN[b]=a});
+
+// ---------- STATE ----------
+const DEF_LANG=String(navigator.language||"").toLowerCase().startsWith("bg")?"bg":"en";
+const DEF={n:6,spyMode:1,mode:"classic",diff:"short",mins:5,pack:"classic",target:7,sound:true,seen:false,lang:DEF_LANG,custom:[],
+  players:POOL.slice(0,8).map(p=>({e:p[0],name:p[DEF_LANG==="bg"?2:1]}))};
+let C=Object.assign({},DEF,ld("spy_cfg",{})||{});
+if(!Array.isArray(C.players)||C.players.length<8)C.players=DEF.players;
+if(!Array.isArray(C.custom))C.custom=[];
+if(!L[C.lang])C.lang="en";
+const customOf=k=>C.custom.find(c=>c.id===k);
+const packOk=k=>!!PACKS[k]||k==="mix"||!!customOf(k);
+if(!packOk(C.pack))C.pack="classic";
+const save=()=>sv("spy_cfg",C);
+const blankSt=()=>rng(8).map(()=>({liar:0,mind:0,sus:0,loyal:0}));
+let S={screen:C.seen?"home":"tut",tut:0,scores:ld("spy_scores",null)||[0,0,0,0,0,0,0,0],st:ld("spy_stats",null),round:ld("spy_round",0)};
+if(!Array.isArray(S.st)||S.st.length<8)S.st=blankSt();
+const saveM=()=>{sv("spy_scores",S.scores);sv("spy_stats",S.st);sv("spy_round",S.round)};
+let tmr=null,AC=null,WL=null;
+
+const t=(k,...a)=>{let v=(L[C.lang]||L.en)[k];if(v===undefined)v=L.en[k];return typeof v==="function"?v(...a):v};
+const pn=p=>p[C.lang]||p.en;
+const rawName=i=>(C.players[i].name||"").trim()||(C.lang==="bg"?"Играч ":"Player ")+(i+1);
+const nm=i=>esc(rawName(i));
+const av=i=>C.players[i].e;
+const packInfo=k=>k==="mix"?{name:t("mix"),icon:"🎲"}:PACKS[k]?{name:PACKS[k].name[C.lang]||PACKS[k].name.en,icon:PACKS[k].icon}:{name:(customOf(k)||{}).name||t("myPack"),icon:"⭐"};
+const placesFor=k=>k==="mix"?ALL:PACKS[k]?PACKS[k].p:((customOf(k)||{places:[]}).places.map(s=>({e:"📍",en:s,bg:s})));
 function buzz(p){if(!C.sound)return;try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
-function beep(f,d,t){if(!C.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain();o.type=t||"sine";o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(AC.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.stop(AC.currentTime+d)}catch(e){}}
+function beep(f,d,ty){if(!C.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();const o=AC.createOscillator(),g=AC.createGain();o.type=ty||"sine";o.frequency.value=f;g.gain.value=.08;o.connect(g);g.connect(AC.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+d);o.stop(AC.currentTime+d)}catch(e){}}
 function jingle(a){a.forEach((f,i)=>setTimeout(()=>beep(f,.2,"triangle"),i*130))}
-function toast(t){const el=$("toast");el.textContent=t;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
+function toast(x){const el=$("toast");el.textContent=x;el.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("on"),2200)}
 function confetti(set){const fx=$("fx");for(let i=0;i<46;i++){const d=document.createElement("span");d.textContent=set[R(set.length)];d.style.left=Math.random()*100+"%";d.style.fontSize=(16+Math.random()*22)+"px";d.style.animationDuration=(1.8+Math.random()*1.8)+"s";d.style.animationDelay=Math.random()*.5+"s";fx.appendChild(d)}setTimeout(()=>{fx.innerHTML=""},4500)}
 function wake(){try{navigator.wakeLock&&navigator.wakeLock.request("screen").then(w=>WL=w).catch(()=>{})}catch(e){}}
 function sleep(){try{WL&&WL.release();WL=null}catch(e){}}
-function go(s){S.screen=s;render()}
+function go(s){if(s!=="result"&&s!=="champ"){const fx=$("fx");if(fx)fx.innerHTML=""}S.screen=s;render()}
 const cardOf=p=>S.cards.find(c=>c.takenBy===p);
 const isSpy=p=>{const c=cardOf(p);return !!(c&&c.spy)};
 const spyList=()=>rng(C.n).filter(isSpy);
 const fmt=s=>{const m=Math.floor(s/60),x=s%60;return m+":"+(x<10?"0":"")+x};
+function applyLang(){document.documentElement.lang=C.lang;document.title=t("title")}
 
 // ---------- SETUP ----------
 function setN(d){C.n=Math.max(4,Math.min(8,C.n+d));save();buzz(10);beep(400+C.n*30,.06);render()}
-function setMode(m){if(m===2&&C.n<5){toast("1–2 spies needs 5+ players");return}C.spyMode=m;save();buzz(10);render()}
+function setMode(m){if(m===2&&C.n<5){toast(t("needs5"));return}C.spyMode=m;save();buzz(10);render()}
+function setGM(m){C.mode=m;save();buzz(10);beep(520,.05);render()}
+function setDiff(d){C.diff=d;save();buzz(10);render()}
 function setPack(k){C.pack=k;save();buzz(10);beep(520,.05);render()}
 function setMins(m){C.mins=m;save();render()}
 function setTarget(m){C.target=m;save();render()}
 function toggleSound(){C.sound=!C.sound;save();render();if(C.sound)beep(660,.1)}
-function resetMatch(){S.scores=[0,0,0,0,0,0,0,0];S.round=0;saveM();render()}
-function rndName(i){const used=C.players.map(p=>p.name);const free=POOL.filter(p=>used.indexOf(p[1])<0);const p=free[R(free.length)]||POOL[R(POOL.length)];C.players[i]={e:p[0],name:p[1]};save();buzz(15);beep(700,.06);render()}
-function rndAll(){C.players=shuffle(POOL).slice(0,8).map(p=>({e:p[0],name:p[1]}));save();buzz([10,30,10]);jingle([523,659]);render()}
+function toggleLang(){
+  const nl=C.lang==="en"?"bg":"en",oi=C.lang==="en"?1:2,ni=nl==="en"?1:2;
+  C.players.forEach(p=>{const m=POOL.find(q=>q[oi]===p.name);if(m)p.name=m[ni]});
+  C.lang=nl;save();applyLang();buzz(10);beep(600,.06);render();
+}
+function resetMatch(){S.scores=[0,0,0,0,0,0,0,0];S.st=blankSt();S.round=0;saveM();render()}
+const li=()=>C.lang==="bg"?2:1;
+function rndName(i){const used=C.players.map(p=>p.name);const free=POOL.filter(p=>used.indexOf(p[li()])<0);const p=free[R(free.length)]||POOL[R(POOL.length)];C.players[i]={e:p[0],name:p[li()]};save();buzz(15);beep(700,.06);render()}
+function rndAll(){C.players=shuffle(POOL).slice(0,8).map(p=>({e:p[0],name:p[li()]}));save();buzz([10,30,10]);jingle([523,659]);render()}
 function setName(i,v){C.players[i].name=v.slice(0,18);save()}
-function tutNext(){if(S.tut<TUT.length-1){S.tut++;beep(500+S.tut*80,.07);render()}else tutDone()}
+function tutNext(){if(S.tut<TUT.en.length-1){S.tut++;beep(500+S.tut*80,.07);render()}else tutDone()}
 function tutDone(){C.seen=true;save();go("home")}
+
+// ---------- CUSTOM PACKS ----------
+function newPack(){S.edit={id:null,name:"",places:["","","",""]};go("pack")}
+function editPack(){const c=customOf(C.pack);if(!c)return;S.edit={id:c.id,name:c.name,places:c.places.slice()};go("pack")}
+function addPlace(){S.edit.places.push("");S.keep=true;render();const ins=document.querySelectorAll(".prow input");const l=ins[ins.length-1];if(l){l.focus();l.scrollIntoView({block:"center"})}}
+function delPlace(i){S.edit.places.splice(i,1);S.keep=true;render()}
+function savePack(){
+  const seen=new Set(),pl=[];
+  S.edit.places.forEach(v=>{v=String(v||"").trim().slice(0,32);const k=v.toLowerCase();if(v&&!seen.has(k)){seen.add(k);pl.push(v)}});
+  if(pl.length<4){toast(t("need4"));buzz([60,40,60]);return}
+  const name=String(S.edit.name||"").trim().slice(0,24)||t("myPack");
+  if(S.edit.id){const c=customOf(S.edit.id);if(c){c.name=name;c.places=pl}}
+  else{const id="c"+Date.now().toString(36);C.custom.push({id,name,places:pl});C.pack=id}
+  save();toast(t("saved"));buzz(20);jingle([523,659]);go("home");
+}
+function delPack(){
+  if(!S.delArm){S.delArm=true;toast(t("delArm"));setTimeout(()=>S.delArm=false,2200);return}
+  S.delArm=false;C.custom=C.custom.filter(c=>c.id!==S.edit.id);if(!packOk(C.pack))C.pack="classic";save();go("home");
+}
 
 // ---------- ROUND ----------
 function newRound(){
   clearInterval(tmr);
-  const list=placesFor(C.pack);let p;
-  do{p=list[R(list.length)]}while(list.length>1&&S.lastPlace===p[0]);
-  S.place=p;S.lastPlace=p[0];
+  const list=placesFor(C.pack);
+  if(list.length<4){toast(t("need4"));return}
+  let p;do{p=list[R(list.length)]}while(S.lastPlace===p.en);
+  S.place=p;S.lastPlace=p.en;
+  S.under=C.mode==="under";
+  if(S.under){const tw=TWIN[p.en]&&byEn[TWIN[p.en]];S.spyPlace=tw||shuffle(list.filter(x=>x.en!==p.en))[0]}
+  S.pool=(!S.under&&C.diff==="short"&&list.length>15)?shuffle([p,...shuffle(list.filter(x=>x.en!==p.en)).slice(0,14)]):list.slice();
   S.ns=(C.spyMode===2&&C.n>=5&&Math.random()<.5)?2:1;
   const deck=[];for(let i=0;i<C.n;i++)deck.push(i<S.ns);
   S.cards=shuffle(deck).map(spy=>({spy,takenBy:null}));
@@ -246,10 +422,10 @@ function newRound(){
 }
 function quit(){
   if(S.quitArm){clearInterval(tmr);S.quitArm=false;S.round=Math.max(0,S.round-1);saveM();sleep();go("home")}
-  else{S.quitArm=true;toast("Tap ✕ again to quit this round");setTimeout(()=>S.quitArm=false,2200)}
+  else{S.quitArm=true;toast(t("quitArm"));setTimeout(()=>S.quitArm=false,2200)}
 }
 function pick(i,el){
-  if(S.cards[i].takenBy!==null)return;
+  if(S.cards[i].takenBy!==null||shuffling)return;
   buzz(20);beep(420,.08);S.from=el.getBoundingClientRect();
   S.cards[i].takenBy=S.turn;S.sel=i;S.flipped=false;go("reveal");
 }
@@ -262,7 +438,7 @@ function shuf(){
   const box=document.querySelector(".cards"),btn=$("shufBtn");
   const wraps=[...box.querySelectorAll(".cw")].filter(w=>w.querySelector(".card"));
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(reduce||!wraps.length||!wraps[0].animate){buzz(30);beep(400,.08);toast("Shuffled!");return}
+  if(reduce||!wraps.length||!wraps[0].animate){buzz(30);beep(400,.08);toast(t("shuffled"));return}
   shuffling=true;box.classList.remove("deal");box.classList.add("shuffling");if(btn)btn.disabled=true;
   const br=box.getBoundingClientRect(),cx=br.left+br.width/2,cy=br.top+br.height/2;
   const done=wraps.map((w,k)=>{
@@ -281,7 +457,7 @@ function shuf(){
     ],{duration:1400,delay:k*40,easing:"cubic-bezier(.45,.05,.3,1)",fill:"none"}).finished;
   });
   beep(220,.25,"sawtooth");buzz(20);
-  for(let t=0;t<18;t++)setTimeout(()=>{beep(300+Math.random()*250,.03,"square");if(t%3===0)buzz(6)},420+t*28);
+  for(let q=0;q<18;q++)setTimeout(()=>{beep(300+Math.random()*250,.03,"square");if(q%3===0)buzz(6)},420+q*28);
   setTimeout(()=>{beep(140,.12);buzz(25)},1150);
   Promise.all(done).catch(()=>{}).then(()=>{
     wraps.forEach(w=>w.style.zIndex="");box.classList.remove("shuffling");
@@ -292,42 +468,44 @@ function flip(){
   const f=$("fi");S.flipped=!S.flipped;f.classList.toggle("up",S.flipped);
   buzz(40);beep(S.flipped?660:330,.12);
   $("hp").style.visibility=S.flipped?"visible":"hidden";
-  $("tip").textContent=S.flipped?"Memorize it, then hide it.":"Tap the card to flip it.";
+  $("tip").textContent=S.flipped?t("tip2"):t("tip1");
 }
 function hide(){S.turn++;S.flipped=false;beep(300,.08);go(S.turn>=C.n?"ready":"pass")}
 function startTimer(){
   S.total=C.mins*60;S.left=S.total;S.paused=false;
-  S.asker=R(C.n);S.target=other(S.asker);S.q=randQ();
+  S.asker=R(C.n);S.target=other(S.asker);S.q=R(QS.en.length);
   jingle([523,659,784]);buzz(60);go("timer");
   clearInterval(tmr);tmr=setInterval(tick,1000);
 }
 function tick(){
   if(S.paused)return;
   S.left--;
-  if(S.left===60){toast("⏰ 1 minute left!");buzz([60,60,60])}
+  if(S.left===60){toast(t("oneMin"));buzz([60,60,60])}
   if(S.left<=10&&S.left>0)beep(880,.06);
   paint();
-  if(S.left<=0){clearInterval(tmr);buzz([200,100,200]);jingle([523,392,262]);toast("⏰ Time's up! Vote now.");go("vote")}
+  if(S.left<=0){clearInterval(tmr);buzz([200,100,200]);jingle([523,392,262]);toast(t("timeUp"));go("vote")}
 }
 function paint(){
-  const t=$("t"),p=$("pr"),r=$("ring");if(!t)return;
-  t.textContent=fmt(S.left);p.style.strokeDashoffset=565.5*(1-S.left/S.total);
+  const tm=$("t"),p=$("pr"),r=$("ring");if(!tm)return;
+  tm.textContent=fmt(S.left);p.style.strokeDashoffset=565.5*(1-S.left/S.total);
   r.classList.toggle("low",S.left<=30);r.classList.toggle("paused",S.paused);
 }
-function pause(){S.paused=!S.paused;$("pz").textContent=S.paused?"▶ Resume":"⏸ Pause";paint();buzz(15)}
+function pause(){S.paused=!S.paused;$("pz").innerHTML=pzInner();paint();buzz(15)}
+const pzInner=()=>`<span class="i">${S.paused?"▶️":"⏸️"}</span>${S.paused?t("bResume"):t("bPause")}`;
 function addMin(){S.total+=60;S.left+=60;paint();buzz(15);beep(600,.06)}
-function other(a){let t;do{t=R(C.n)}while(t===a&&C.n>1);return t}
-function randQ(){let q;do{q=QS[R(QS.length)]}while(q===S.q);return q}
-function nextQ(){S.asker=S.target;S.target=other(S.asker);S.q=randQ();buzz(15);beep(560,.06);render()}
+function other(a){let x;do{x=R(C.n)}while(x===a&&C.n>1);return x}
+function nextQ(){S.asker=S.target;S.target=other(S.asker);let q;do{q=R(QS.en.length)}while(q===S.q);S.q=q;buzz(15);beep(560,.06);render()}
 function peekSel(i){S.peek=i;S.flipped=false;S.from=null;go("peek")}
 function peekHide(){S.flipped=false;go("timer")}
 function spyPick(i){
-  if(!isSpy(i)){S.scores[i]=Math.max(0,S.scores[i]-1);saveM();buzz([100,50,100]);beep(150,.3,"sawtooth");toast("Not a spy! −1 point for "+rawName(i));go("timer");return}
+  if(!isSpy(i)){S.scores[i]=Math.max(0,S.scores[i]-1);saveM();buzz([100,50,100]);beep(150,.3,"sawtooth");toast(t("notSpy",rawName(i)));go("timer");return}
   clearInterval(tmr);S.voted=i;S.early=true;buzz(80);go("guess");
 }
 function startVote(){clearInterval(tmr);go("vote")}
 function vote(p){
-  S.out.push(p);S.accused=p;go("drum");
+  S.out.push(p);S.accused=p;
+  if(!isSpy(p)){S.st[p].sus++;saveM()}
+  go("drum");
   let k=0;const roll=setInterval(()=>{beep(180+k*25,.05,"square");buzz(8);if(++k>16)clearInterval(roll)},120);
   setTimeout(revealDrum,2200);
 }
@@ -335,39 +513,100 @@ function revealDrum(){
   if(S.screen!=="drum")return;
   const p=S.accused,spy=isSpy(p);
   $("drum").classList.add("done");
-  $("verd").outerHTML=spy?'<div class="verdict spy">🕵️ SPY!</div>':'<div class="verdict inn">😇 INNOCENT</div>';
-  $("dh").textContent=rawName(p)+(spy?" was a spy!":" was innocent!");
+  $("verd").outerHTML=spy?`<div class="verdict spy">${t("vSpy")}</div>`:`<div class="verdict inn">${t("vInn")}</div>`;
+  $("dh").textContent=spy?t("wasSpy",rawName(p)):t("wasInn",rawName(p));
   if(spy){$("app").classList.add("shake");setTimeout(()=>$("app")&&$("app").classList.remove("shake"),700);buzz([200,80,200]);jingle([523,659,784,1046])}
   else{buzz([300]);jingle([392,330,262])}
-  $("dn").innerHTML=spy?`<p>But wait. If ${nm(p)} guesses the place, the spies still win.</p><button class="btn" onclick="caughtGuess()">Give ${nm(p)} the phone</button>`
-    :`<button class="btn" onclick="wrongOut()">See results</button>`;
+  $("dn").innerHTML=!spy?`<button class="btn" onclick="wrongOut()">${t("seeRes")}</button>`
+    :S.under?`<p>${esc(t("hadPlace",rawName(p),S.spyPlace.e+" "+pn(S.spyPlace)))}</p><button class="btn" onclick="underCaught()">${t("cont")}</button>`
+    :`<p>${t("butWait",nm(p))}</p><button class="btn" onclick="caughtGuess()">${t("givePhone",nm(p))}</button>`;
 }
 function caughtGuess(){S.voted=S.accused;S.early=false;go("guess")}
-function wrongOut(){finish("spy",rawName(S.accused)+" was innocent. The spies got away.")}
-function guess(idx){
-  const pl=placesFor(C.pack)[idx],who=rawName(S.voted);
-  if(pl[0]===S.place[0])finish("spy",who+" guessed the place!",S.early?3:2);
-  else if(S.early)finish("inn",who+" guessed "+pl[0]+" and got it wrong.");
-  else{S.caught++;if(S.caught<S.ns){buzz([100,60,100]);jingle([392,523,392]);go("twist")}else finish("inn",who+" was caught and guessed "+pl[0]+".")}
+function underCaught(){S.caught++;if(S.caught<S.ns){buzz([100,60,100]);jingle([392,523,392]);go("twist")}else finish("inn",["wUnder"])}
+function wrongOut(){finish("spy",["wWrongOut",rawName(S.accused)])}
+function guess(i){
+  const pl=S.pool[i],who=rawName(S.voted);
+  if(pl.en===S.place.en){S.st[S.voted].mind++;finish("spy",["wGuessRight",who],S.early?3:2)}
+  else if(S.early)finish("inn",["wEarlyWrong",who,pn(pl)]);
+  else{S.caught++;if(S.caught<S.ns){buzz([100,60,100]);jingle([392,523,392]);go("twist")}else finish("inn",["wCaughtWrong",who,pn(pl)])}
 }
 function finish(w,why,pts){
   pts=pts||2;const sp=spyList();S.delta=[0,0,0,0,0,0,0,0];
-  for(let i=0;i<C.n;i++){if(w==="spy"&&sp.includes(i))S.delta[i]=pts;if(w==="inn"&&!sp.includes(i))S.delta[i]=1}
+  for(let i=0;i<C.n;i++){
+    if(w==="spy"&&sp.includes(i)){S.delta[i]=pts;S.st[i].liar++}
+    if(w==="inn"&&!sp.includes(i)){S.delta[i]=1;S.st[i].loyal++}
+  }
   for(let i=0;i<8;i++)S.scores[i]+=S.delta[i];saveM();
-  const L=w==="spy"?WS:WI;S.outcome={w,why,line:L[R(L.length)]};
+  S.outcome={w,why,line:R(4)};
   S.champ=C.target>0&&Math.max(...S.scores.slice(0,C.n))>=C.target;
   confetti(w==="spy"?["🕵️","💣","🖤","😈"]:["🎉","⭐","✨","🥳","💚"]);
   buzz([80,50,80,50,200]);jingle(w==="spy"?[330,294,262,196]:[523,659,784,1046]);sleep();
   go("result");
 }
-function share(){
-  const top=rng(C.n).sort((a,b)=>S.scores[b]-S.scores[a])[0];
-  const txt=`We just played Who's the Spy 🕵️ ${av(top)} ${rawName(top)} is winning with ${S.scores[top]} points. Can your crew catch the spy?`;
-  try{if(navigator.share){navigator.share({title:"Who's the Spy",text:txt,url:location.href}).catch(()=>{});return}}catch(e){}
-  try{navigator.clipboard.writeText(txt+" "+location.href).then(()=>toast("Copied! Paste it in your group chat."),()=>toast("Couldn't copy"))}catch(e){toast("Couldn't copy")}
+const ranking=()=>rng(C.n).sort((a,b)=>S.scores[b]-S.scores[a]);
+function awards(){
+  const got=new Set();
+  return [["liar","aLiar","dLiar"],["mind","aMind","dMind"],["sus","aSus","dSus"],["loyal","aLoyal","dLoyal"]].map(([k,a,d])=>{
+    const bv=Math.max(0,...rng(C.n).map(i=>S.st[i][k]));if(!bv)return null;
+    const tied=rng(C.n).filter(i=>S.st[i][k]===bv).sort((x,y)=>(got.has(x)-got.has(y))||(S.scores[y]-S.scores[x]));
+    const p=tied[0];got.add(p);return {p,title:t(a),desc:t(d,bv)};
+  }).filter(Boolean);
 }
-function crown(){confetti(["🏆","👑","⭐","🎉"]);jingle([523,659,784,1046,1318]);buzz([100,50,100,50,300]);go("champ")}
-function newMatch(){S.scores=[0,0,0,0,0,0,0,0];S.round=0;saveM();go("home")}
+function share(){
+  const top=ranking()[0];
+  const txt=t("brag",av(top)+" "+rawName(top),S.scores[top]);
+  try{if(navigator.share){navigator.share({title:t("title"),text:txt,url:location.href}).catch(()=>{});return}}catch(e){}
+  try{navigator.clipboard.writeText(txt+" "+location.href).then(()=>toast(t("copied")),()=>toast(t("noCopy")))}catch(e){toast(t("noCopy"))}
+}
+function crown(){confetti(["🏆","👑","⭐","🎉"]);jingle([523,659,784,1046,1318]);buzz([100,50,100,50,300]);S.imgFile=null;go("champ");buildImage().then(f=>{S.imgFile=f}).catch(()=>{})}
+function newMatch(){S.scores=[0,0,0,0,0,0,0,0];S.st=blankSt();S.round=0;saveM();go("home")}
+
+// ---------- SHARE IMAGE ----------
+function rr(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
+function loadImg(src){return new Promise((ok,no)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=no;i.src=src})}
+async function buildImage(){
+  const W=1080,H=1920,cv=document.createElement("canvas");cv.width=W;cv.height=H;const x=cv.getContext("2d");
+  const g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,"#1f3a66");g.addColorStop(1,"#0a1322");x.fillStyle=g;x.fillRect(0,0,W,H);
+  const rg=x.createRadialGradient(W/2,560,40,W/2,560,620);rg.addColorStop(0,"rgba(240,183,62,.28)");rg.addColorStop(1,"rgba(240,183,62,0)");x.fillStyle=rg;x.fillRect(0,0,W,H);
+  try{await document.fonts.ready}catch(e){}
+  const F=(w,s)=>`${w} ${s}px Archivo, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
+  const fit=(txt,w,s,max)=>{x.font=F(w,s);while(x.measureText(txt).width>max&&s>20){s-=2;x.font=F(w,s)}};
+  x.textAlign="center";x.textBaseline="middle";
+  try{const im=await loadImg("icon-512.png");x.save();rr(x,W/2-120,80,240,240,56);x.clip();x.drawImage(im,W/2-120,80,240,240);x.restore()}catch(e){}
+  x.fillStyle="#eaf0f7";fit(t("title"),800,84,W-120);x.fillText(t("title"),W/2,400);
+  const idx=ranking(),c=idx[0];
+  x.fillStyle="#f0b73e";x.font=F(800,40);x.fillText("🏆 "+t("imgChamp").toUpperCase(),W/2,500);
+  x.font=F(400,130);x.fillText(av(c),W/2,620);
+  x.fillStyle="#eaf0f7";fit(rawName(c),800,78,W-140);x.fillText(rawName(c),W/2,740);
+  x.fillStyle="#8fa3bd";x.font=F(600,44);x.fillText(S.scores[c]+" "+t("ptsWord",S.scores[c]),W/2,805);
+  let y=890;
+  idx.slice(1).forEach((p,k)=>{
+    x.fillStyle="rgba(255,255,255,.07)";rr(x,120,y-27,W-240,54,18);x.fill();
+    x.textAlign="left";x.fillStyle="#8fa3bd";x.font=F(700,30);x.fillText((k+2)+".",150,y);
+    x.font=F(400,34);x.fillText(av(p),205,y);
+    x.fillStyle="#eaf0f7";x.font=F(600,32);x.fillText(rawName(p).slice(0,24),262,y);
+    x.textAlign="right";x.fillText(String(S.scores[p]),W-150,y);x.textAlign="center";y+=62;
+  });
+  const aw=awards();
+  if(aw.length){
+    y+=40;x.fillStyle="#f0b73e";x.font=F(800,36);x.fillText(t("awardsT").toUpperCase(),W/2,y);y+=66;
+    aw.forEach(a=>{
+      x.fillStyle="rgba(240,183,62,.10)";rr(x,120,y-34,W-240,68,20);x.fill();
+      x.textAlign="left";x.fillStyle="#f0b73e";x.font=F(700,32);x.fillText(a.title,150,y);
+      x.textAlign="right";x.fillStyle="#eaf0f7";x.font=F(600,32);x.fillText(av(a.p)+" "+rawName(a.p).slice(0,18),W-150,y);x.textAlign="center";y+=82;
+    });
+  }
+  const host=location.protocol.startsWith("http")?(location.host+location.pathname).replace(/\/(index\.html)?$/,""):"";
+  x.fillStyle="#8fa3bd";x.font=F(600,34);x.fillText(host?t("imgPlay")+" · "+host:t("title"),W/2,H-90);
+  const blob=await new Promise(r=>cv.toBlob(r,"image/png"));
+  return new File([blob],"whos-the-spy.png",{type:"image/png"});
+}
+async function shareImg(){
+  let f=S.imgFile;
+  if(!f){toast(t("wait"));try{f=await buildImage();S.imgFile=f}catch(e){toast(t("noCopy"));return}}
+  try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e&&e.name==="AbortError")return}
+  const u=URL.createObjectURL(f),a=document.createElement("a");a.href=u;a.download=f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000);toast(t("imgSaved"));
+}
 
 // ---------- INSTALL ----------
 let DP=null;
@@ -375,134 +614,163 @@ const standalone=()=>{try{return matchMedia("(display-mode: standalone)").matche
 const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 const canInstall=()=>!standalone()&&(!!DP||isIOS());
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();DP=e;if(S.screen==="home")render()});
-window.addEventListener("appinstalled",()=>{DP=null;toast("Installed! Find it on your home screen.");if(S.screen==="home")render()});
+window.addEventListener("appinstalled",()=>{DP=null;toast(t("installed"));if(S.screen==="home")render()});
 function install(){
-  if(DP){DP.prompt();DP.userChoice.then(r=>{if(r&&r.outcome==="accepted")toast("Installing…")}).finally(()=>{DP=null;render()})}
+  if(DP){DP.prompt();DP.userChoice.then(r=>{if(r&&r.outcome==="accepted")toast(t("installing"))}).finally(()=>{DP=null;render()})}
   else if(isIOS())go("ios");
 }
 
 // ---------- VIEW ----------
 const chips=(arr,cur,fn,lab)=>arr.map(m=>`<button class="chip${cur===m?" on":""}" onclick="${fn}(${m})">${lab(m)}</button>`).join("");
-const bar=()=>`<div class="top"><button class="icon-btn" onclick="quit()" aria-label="Quit round">✕</button><span class="rnd">Round ${S.round}</span><button class="icon-btn" onclick="toggleSound()" aria-label="Sound">${C.sound?"🔊":"🔇"}</button></div>`;
-function dots(){return `<div class="dots" aria-label="Player ${S.turn+1} of ${C.n}">${rng(C.n).map(i=>`<i class="${i<S.turn?"d":i===S.turn?"c":""}"></i>`).join("")}</div>`}
+const flagBtn=()=>`<button class="icon-btn" onclick="toggleLang()" aria-label="Language / Език">${C.lang==="bg"?"🇧🇬":"🇬🇧"}</button>`;
+const sndBtn=()=>`<button class="icon-btn" onclick="toggleSound()" aria-label="Sound">${C.sound?"🔊":"🔇"}</button>`;
+const bar=()=>`<div class="top"><button class="icon-btn" onclick="quit()" aria-label="Quit round">✕</button><span class="rnd">${t("round",S.round)}</span>${sndBtn()}</div>`;
+function dots(){return `<div class="dots" aria-label="${S.turn+1} / ${C.n}">${rng(C.n).map(i=>`<i class="${i<S.turn?"d":i===S.turn?"c":""}"></i>`).join("")}</div>`}
+const sortPool=()=>S.pool.map((p,i)=>[p,i]).sort((a,b)=>pn(a[0]).localeCompare(pn(b[0]),C.lang));
 function board(delta){
-  const idx=rng(C.n).sort((a,b)=>S.scores[b]-S.scores[a]),mx=S.scores[idx[0]];
+  const idx=ranking(),mx=S.scores[idx[0]];
   return `<div class="sb">${idx.map(i=>`<div class="sc${mx>0&&S.scores[i]===mx?" lead":""}"><span class="a">${av(i)}</span><span>${nm(i)}${mx>0&&S.scores[i]===mx?" 👑":""}</span>${delta&&S.delta&&S.delta[i]?`<span class="delta">+${S.delta[i]}</span>`:""}<b>${S.scores[i]}</b></div>`).join("")}</div>`;
 }
 function face(c){
-  return c.spy
-    ?`<div class="face front spy"><div class="em">🕵️</div><div class="big">You are the spy</div><p>You don't know the place. Ask vague questions, listen for clues, and blend in.</p></div>`
-    :`<div class="face front place"><div class="em">${S.place[1]}</div><p>The place is</p><div class="big">${S.place[0]}</div><p class="small">Prove you know it without giving it away.</p></div>`;
+  if(c.spy&&!S.under)return `<div class="face front spy"><div class="em">🕵️</div><div class="big">${t("youSpy")}</div><p>${t("spyDesc")}</p></div>`;
+  const pl=c.spy?S.spyPlace:S.place;
+  return `<div class="face front place"><div class="em">${pl.e}</div><p>${t("placeIs")}</p><div class="big">${esc(pn(pl))}</div><p class="small">${t("prove")}</p></div>`;
 }
 function flipStage(p,c){
-  return `<div class="stage"><div id="fly"><div class="fi" id="fi" onclick="flip()" role="button" aria-label="Flip your card"><div class="face back"><div class="eye">👁️</div><b>${av(p)} ${nm(p)}</b><p>Tap to flip</p></div>${face(c)}</div></div></div>`;
+  return `<div class="stage"><div id="fly"><div class="fi" id="fi" onclick="flip()" role="button" aria-label="${t("tip1")}"><div class="face back"><div class="eye">👁️</div><b>${av(p)} ${nm(p)}</b><p>${t("tapFlip")}</p></div>${face(c)}</div></div></div>`;
 }
 function render(){
   let h="";const s=S.screen;
   if(s==="tut"){
-    const t=TUT[S.tut];
-    h=`<div class="top"><span></span><button class="link" onclick="tutDone()">Skip</button></div>
-    <div class="center tut"><div class="em">${t[0]}</div><h2>${t[1]}</h2><p>${t[2]}</p></div>
-    <div class="dots">${TUT.map((x,i)=>`<i class="${i<S.tut?"d":i===S.tut?"c":""}"></i>`).join("")}</div>
-    <button class="btn big" onclick="tutNext()">${S.tut<TUT.length-1?"Next":"Let's play"}</button>`;
+    const tu=TUT[C.lang]||TUT.en,x=tu[S.tut];
+    h=`<div class="top">${flagBtn()}<button class="link" onclick="tutDone()">${t("skip")}</button></div>
+    <div class="center tut"><div class="em">${x[0]}</div><h2>${x[1]}</h2><p>${x[2]}</p></div>
+    <div class="dots">${tu.map((q,i)=>`<i class="${i<S.tut?"d":i===S.tut?"c":""}"></i>`).join("")}</div>
+    <button class="btn big" onclick="tutNext()">${S.tut<tu.length-1?t("tutNext"):t("letsPlay")}</button>`;
   }
   else if(s==="home"){
-    const packs=[...Object.keys(PACKS),"mix"].map(k=>{const P=packInfo(k);return `<button class="pack${C.pack===k?" on":""}" onclick="setPack('${k}')"><span class="pi">${P.icon}</span><b>${P.name}</b><small>${placesFor(k).length} places</small></button>`}).join("");
-    const two=C.spyMode===2&&C.n>=5;
-    h=`<div class="top"><button class="icon-btn" onclick="S.tut=0;go('tut')" aria-label="How to play">❓</button><button class="icon-btn" onclick="toggleSound()" aria-label="Sound">${C.sound?"🔊":"🔇"}</button></div>
-    <div class="hero"><img class="applogo" src="icon-192.png" alt="" width="112" height="112"><h1>Who's the Spy?</h1><p>One phone. One secret place. Someone's lying.</p></div>
-    <div class="box"><div class="lbl">Players</div><div class="stepper"><button onclick="setN(-1)" aria-label="Fewer players">−</button><b>${C.n}</b><button onclick="setN(1)" aria-label="More players">+</button></div>
-    <button class="avs" onclick="go('names')" aria-label="Edit player names">${rng(C.n).map(i=>`<span>${av(i)}</span>`).join("")}<em>Names ✏️</em></button></div>
-    <div class="box"><div class="lbl">Spies</div><div class="row"><button class="chip${!two?" on":""}" onclick="setMode(1)">1 spy</button><button class="chip${two?" on":""}" ${C.n<5?"disabled":""} onclick="setMode(2)">1–2 spies 🤫</button></div>
-    <p class="small">${two?"Each round has 1 or 2 spies at random. Nobody knows which, not even the spies.":"Exactly one spy every round."}</p></div>
-    <div class="box"><div class="lbl">Places</div><div class="packs">${packs}</div></div>
-    <div class="box"><div class="lbl">Round timer</div><div class="row">${chips([3,5,8],C.mins,"setMins",m=>m+" min")}</div>
-    <div class="lbl">Win the match at</div><div class="row">${chips([5,7,10,0],C.target,"setTarget",m=>m?m+" pts":"∞")}</div></div>
-    ${S.round?`<div class="box"><div class="lbl">Scores · ${S.round} round${S.round>1?"s":""}</div>${board()}<button class="link" onclick="resetMatch()">Reset scores</button></div>`:""}
-    <div class="sticky"><button class="btn big" onclick="newRound()">${S.round?"▶ Next round":"▶ Play"}</button>${canInstall()?`<button class="btn alt" onclick="install()">📲 Install the app</button>`:""}</div>`;
+    const keys=[...Object.keys(PACKS),"mix",...C.custom.map(c=>c.id)];
+    const packs=keys.map(k=>{const P=packInfo(k);return `<button class="pack${C.pack===k?" on":""}" onclick="setPack('${k}')"><span class="pi">${P.icon}</span><b>${esc(P.name)}</b><small>${t("nPlaces",placesFor(k).length)}</small></button>`}).join("")
+      +`<button class="pack new" onclick="newPack()"><span class="pi">＋</span><b>${t("newPack")}</b></button>`;
+    const two=C.spyMode===2&&C.n>=5,under=C.mode==="under";
+    h=`<div class="top"><button class="icon-btn" onclick="S.tut=0;go('tut')" aria-label="How to play">❓</button><div class="rg">${flagBtn()}${sndBtn()}</div></div>
+    <div class="hero"><img class="applogo" src="icon-192.png" alt="" width="112" height="112"><h1>${t("title")}</h1><p>${t("tagline")}</p></div>
+    <div class="box"><div class="lbl">${t("players")}</div><div class="stepper"><button onclick="setN(-1)" aria-label="−">−</button><b>${C.n}</b><button onclick="setN(1)" aria-label="+">+</button></div>
+    <button class="avs" onclick="go('names')">${rng(C.n).map(i=>`<span>${av(i)}</span>`).join("")}<em>${t("names")}</em></button></div>
+    <div class="box"><div class="lbl">${t("mode")}</div><div class="row"><button class="chip${!under?" on":""}" onclick="setGM('classic')">${t("mClassic")}</button><button class="chip${under?" on":""}" onclick="setGM('under')">${t("mUnder")}</button></div>
+    <p class="small">${under?t("dUnder"):t("dClassic")}</p>
+    ${!under?`<div class="lbl">${t("list")}</div><div class="row"><button class="chip${C.diff==="short"?" on":""}" onclick="setDiff('short')">${t("short")}</button><button class="chip${C.diff!=="short"?" on":""}" onclick="setDiff('full')">${t("full")}</button></div><p class="small">${C.diff==="short"?t("dShort"):t("dFull")}</p>`:""}</div>
+    <div class="box"><div class="lbl">${t("spies")}</div><div class="row"><button class="chip${!two?" on":""}" onclick="setMode(1)">${t("oneSpy")}</button><button class="chip${two?" on":""}" ${C.n<5?"disabled":""} onclick="setMode(2)">${t("twoSpies")}</button></div>
+    <p class="small">${two?t("twoDesc"):t("oneDesc")}</p></div>
+    <div class="box"><div class="lbl">${t("places")}</div><div class="packs">${packs}</div>${customOf(C.pack)?`<button class="link" style="align-self:flex-start;padding:4px 0" onclick="editPack()">${t("editThis")}</button>`:""}</div>
+    <div class="box"><div class="lbl">${t("timer")}</div><div class="row">${chips([3,5,8],C.mins,"setMins",m=>t("min",m))}</div>
+    <div class="lbl">${t("winAt")}</div><div class="row">${chips([5,7,10,0],C.target,"setTarget",m=>m?t("pts",m):"∞")}</div></div>
+    ${S.round?`<div class="box"><div class="lbl">${t("scores")} · ${t("nRounds",S.round)}</div>${board()}<button class="link" onclick="resetMatch()">${t("reset")}</button></div>`:""}
+    <div class="sticky"><button class="btn big" onclick="newRound()">${S.round?t("next"):t("play")}</button>${canInstall()?`<button class="btn alt" onclick="install()">${t("install")}</button>`:""}</div>`;
+  }
+  else if(s==="pack"){
+    const E=S.edit;
+    h=`<div class="top"><button class="icon-btn" onclick="go('home')" aria-label="${t("back")}">←</button><h2>${E.id?t("packEdit"):t("packNew")}</h2><span style="width:44px"></span></div>
+    <p class="small">${t("packTip")}</p>
+    <div class="lbl">${t("packName")}</div><input class="tin" value="${esc(E.name)}" maxlength="24" placeholder="${esc(t("packNamePh"))}" oninput="S.edit.name=this.value">
+    <div class="lbl">${t("places")}</div>
+    ${E.places.map((v,i)=>`<div class="nrow prow"><span class="pnum">${i+1}</span><input value="${esc(v)}" maxlength="32" placeholder="${esc(t("placePh"))}" oninput="S.edit.places[${i}]=this.value"><button class="icon-btn" onclick="delPlace(${i})" aria-label="✕">✕</button></div>`).join("")}
+    <button class="btn alt" onclick="addPlace()">${t("addPlace")}</button>
+    <div class="sticky"><button class="btn big" onclick="savePack()">${t("savePack")}</button>${E.id?`<button class="link" onclick="delPack()">${t("delPack")}</button>`:""}</div>`;
   }
   else if(s==="ios"){
-    h=`<div class="top"><button class="icon-btn" onclick="go('home')" aria-label="Back">←</button><span></span></div>
-    <div class="center"><div class="em">📲</div><h2>Install on iPhone</h2>
-    <div class="box" style="text-align:left;width:100%"><p><b style="color:var(--text)">1.</b> Open this page in <b style="color:var(--text)">Safari</b>.</p><p><b style="color:var(--text)">2.</b> Tap the <b style="color:var(--text)">Share</b> button (square with an arrow ⬆️).</p><p><b style="color:var(--text)">3.</b> Scroll down and tap <b style="color:var(--text)">Add to Home Screen</b>.</p></div>
-    <p class="small">The game then opens full screen from your home screen and works offline.</p></div>
-    <button class="btn big" onclick="go('home')">Got it</button>`;
+    h=`<div class="top"><button class="icon-btn" onclick="go('home')" aria-label="${t("back")}">←</button><span></span></div>
+    <div class="center"><div class="em">📲</div><h2>${t("iosT")}</h2>
+    <div class="box steps" style="text-align:left;width:100%"><p><b>1.</b> ${t("ios1")}</p><p><b>2.</b> ${t("ios2")}</p><p><b>3.</b> ${t("ios3")}</p></div>
+    <p class="small">${t("iosN")}</p></div>
+    <button class="btn big" onclick="go('home')">${t("gotIt")}</button>`;
   }
   else if(s==="names"){
-    h=`<div class="top"><h2>Players</h2><button class="btn alt" style="width:auto;min-height:44px;padding:8px 18px" onclick="go('home')">Done</button></div>
-    <p class="small">Tap 🎲 for a silly name, or type real ones.</p>
-    ${rng(C.n).map(i=>`<div class="nrow"><button class="av" onclick="rndName(${i})" aria-label="Random name">${av(i)}</button><input value="${nm(i)}" maxlength="18" aria-label="Player ${i+1} name" oninput="setName(${i},this.value)"><button class="icon-btn" onclick="rndName(${i})" aria-label="Random name">🎲</button></div>`).join("")}
-    <div class="sticky"><button class="btn alt" onclick="rndAll()">🎲 Randomize everyone</button></div>`;
+    h=`<div class="top"><h2>${t("namesT")}</h2><button class="btn alt" style="width:auto;min-height:44px;padding:8px 18px" onclick="go('home')">${t("done")}</button></div>
+    <p class="small">${t("namesHint")}</p>
+    ${rng(C.n).map(i=>`<div class="nrow"><button class="av" onclick="rndName(${i})" aria-label="🎲">${av(i)}</button><input value="${nm(i)}" maxlength="18" aria-label="${i+1}" oninput="setName(${i},this.value)"><button class="icon-btn" onclick="rndName(${i})" aria-label="🎲">🎲</button></div>`).join("")}
+    <div class="sticky"><button class="btn alt" onclick="rndAll()">${t("rndAll")}</button></div>`;
   }
   else if(s==="pass"){
-    h=bar()+`<div class="center"><div class="em">${av(S.turn)}</div><h2>Pass the phone to<br>${nm(S.turn)}</h2><p>Card ${S.turn+1} of ${C.n}. Nobody else should see the screen.</p></div>${dots()}<button class="btn big" onclick="go('pick')">I'm ${nm(S.turn)} 👋</button>`;
+    h=bar()+`<div class="center"><div class="em">${av(S.turn)}</div><h2>${t("passTo",nm(S.turn))}</h2><p>${t("passSub",S.turn+1,C.n)}</p></div>${dots()}<button class="btn big" onclick="go('pick')">${t("imX",nm(S.turn))}</button>`;
   }
   else if(s==="pick"){
     const w=C.n===4?"calc(50% - 5px)":C.n>=7?"calc(25% - 8px)":"calc(33.33% - 7px)";
-    const cs=rng(C.n).map(i=>{const t=S.cards[i].takenBy;return `<div class="cw" style="width:${w};animation-delay:${i*70}ms">${t!==null?`<div class="slot"><span>${av(t)}</span><small>${nm(t)}</small></div>`:`<button class="card" aria-label="Card ${i+1}" onclick="pick(${i},this)"><span class="eye">👁️</span><span class="num">${i+1}</span></button>`}</div>`}).join("");
-    h=bar()+dots()+`<div class="hint"><h2>${av(S.turn)} ${nm(S.turn)}, tap a card</h2></div><div class="cards${S.turn===0?" deal":""}">${cs}</div>`+
-      (C.n-S.turn>1?`<button class="btn alt" id="shufBtn" onclick="shuf()">🔀 Shuffle the cards</button>`:`<p class="hint">Last card left. Tap it.</p>`);
+    const cs=rng(C.n).map(i=>{const tb=S.cards[i].takenBy;return `<div class="cw" style="width:${w};animation-delay:${i*70}ms">${tb!==null?`<div class="slot"><span>${av(tb)}</span><small>${nm(tb)}</small></div>`:`<button class="card" aria-label="${i+1}" onclick="pick(${i},this)"><span class="eye">👁️</span><span class="num">${i+1}</span></button>`}</div>`}).join("");
+    h=bar()+dots()+`<div class="hint"><h2>${av(S.turn)} ${t("tapCard",nm(S.turn))}</h2></div><div class="cards${S.turn===0?" deal":""}">${cs}</div>`+
+      (C.n-S.turn>1?`<button class="btn alt" id="shufBtn" onclick="shuf()">${t("shuffle")}</button>`:`<p class="hint">${t("lastCard")}</p>`);
   }
   else if(s==="reveal"){
-    h=bar()+dots()+flipStage(S.turn,S.cards[S.sel])+`<p class="hint" id="tip">Tap the card to flip it.</p><button class="btn" id="hp" style="visibility:hidden" onclick="hide()">Got it, hide it</button>`;
+    h=bar()+dots()+flipStage(S.turn,S.cards[S.sel])+`<p class="hint" id="tip">${t("tip1")}</p><button class="btn" id="hp" style="visibility:hidden" onclick="hide()">${t("hideIt")}</button>`;
   }
   else if(s==="ready"){
-    h=bar()+`<div class="center"><div class="em">🎲</div><h2>Everyone's in!</h2><p>Put the phone in the middle where everyone can see it. The app picks who asks first.</p>${C.spyMode===2&&C.n>=5?`<p class="small">🤫 1 or 2 spies. Nobody knows.</p>`:""}</div><button class="btn big" onclick="startTimer()">⏱ Start the clock</button>`;
+    h=bar()+`<div class="center"><div class="em">🎲</div><h2>${t("readyT")}</h2><p>${t("readyD")}</p>${S.under?`<p class="small">${t("readyU")}</p>`:""}${C.spyMode===2&&C.n>=5?`<p class="small">${t("mystery")}</p>`:""}</div><button class="btn big" onclick="startTimer()">${t("startClock")}</button>`;
   }
   else if(s==="timer"){
+    const q=(QS[C.lang]||QS.en)[S.q];
     h=bar()+`<div class="ring${S.paused?" paused":""}" id="ring"><svg viewBox="0 0 200 200"><circle class="tr" cx="100" cy="100" r="90"/><circle class="pr" id="pr" cx="100" cy="100" r="90" style="stroke-dashoffset:${565.5*(1-S.left/S.total)}"/></svg><div class="tm" id="t">${fmt(S.left)}</div></div>
-    <div class="qcard"><div class="who">${av(S.asker)} ${nm(S.asker)} asks ${av(S.target)} ${nm(S.target)}</div><div class="q">“${S.q}”</div><button class="btn alt" onclick="nextQ()">🎲 Next question</button></div>
-    <div class="tbar"><button class="btn alt" onclick="go('peekwho')">👁️ Peek</button><button class="btn alt" id="pz" onclick="pause()">${S.paused?"▶ Resume":"⏸ Pause"}</button><button class="btn alt" onclick="addMin()">+1 min</button></div>
-    <div class="sticky"><button class="btn big" onclick="startVote()">🗳️ Vote now</button><button class="link" onclick="go('spywho')">🕵️ Spy? Guess the place now</button></div>`;
+    <div class="qcard"><div class="who">${t("asks",av(S.asker)+" "+nm(S.asker),av(S.target)+" "+nm(S.target))}</div><div class="q">“${q}”</div><button class="btn alt" onclick="nextQ()">${t("nextQ")}</button></div>
+    <div class="tbar">${!S.under?`<button class="btn alt" onclick="go('places')"><span class="i">📋</span>${t("bPlaces")}</button>`:""}<button class="btn alt" onclick="go('peekwho')"><span class="i">👁️</span>${t("bPeek")}</button><button class="btn alt" id="pz" onclick="pause()">${pzInner()}</button><button class="btn alt" onclick="addMin()"><span class="i">⏱️</span>${t("bMin")}</button></div>
+    <div class="sticky"><button class="btn big" onclick="startVote()">${t("voteNow")}</button>${!S.under?`<button class="link" onclick="go('spywho')">${t("spyNow")}</button>`:""}</div>`;
+  }
+  else if(s==="places"){
+    h=bar()+`<h2>📋 ${t("possT")}</h2><p>${t("possD")}</p>
+    <div class="list ro">${sortPool().map(([p])=>`<div class="chip"><span>${p.e}</span>${esc(pn(p))}</div>`).join("")}</div>
+    <div class="sticky"><button class="btn alt" onclick="go('timer')">${t("back")}</button></div>`;
   }
   else if(s==="peekwho"||s==="spywho"){
     const spy=s==="spywho";
-    h=bar()+`<h2>${spy?"Spy, who are you?":"Who forgot their card?"}</h2><p>${spy?"Guess right and the spies win big (+3). Guess wrong and the innocents win. Tapping a non-spy costs that player a point.":"Take the phone, peek, and hide it again. The clock keeps running."}</p>
+    h=bar()+`<h2>${spy?t("spyT"):t("peekT")}</h2><p>${spy?t("spyD"):t("peekD")}</p>
     <div class="votes">${rng(C.n).filter(i=>!S.out.includes(i)).map(i=>`<button class="btn alt" onclick="${spy?"spyPick":"peekSel"}(${i})"><span class="a">${av(i)}</span>${nm(i)}</button>`).join("")}</div>
-    <div class="sticky"><button class="btn alt" onclick="go('timer')">← Back</button></div>`;
+    <div class="sticky"><button class="btn alt" onclick="go('timer')">${t("back")}</button></div>`;
   }
   else if(s==="peek"){
-    h=bar()+flipStage(S.peek,cardOf(S.peek))+`<p class="hint" id="tip">Tap the card to flip it.</p><button class="btn" id="hp" style="visibility:hidden" onclick="peekHide()">Hide and go back</button>`;
+    h=bar()+flipStage(S.peek,cardOf(S.peek))+`<p class="hint" id="tip">${t("tip1")}</p><button class="btn" id="hp" style="visibility:hidden" onclick="peekHide()">${t("peekHide")}</button>`;
   }
   else if(s==="vote"){
-    h=bar()+`<h2>${S.out.length?"Vote again!":"Who's the spy?"}</h2><p>On three, everyone points at a suspect. Tap whoever got the most fingers.</p>
+    h=bar()+`<h2>${S.out.length?t("voteAgain"):t("voteT")}</h2><p>${t("voteD")}</p>
     <div class="votes">${rng(C.n).filter(i=>!S.out.includes(i)).map(i=>`<button class="btn alt" onclick="vote(${i})"><span class="a">${av(i)}</span>${nm(i)}</button>`).join("")}</div>`;
   }
   else if(s==="drum"){
-    h=`<div class="drum" id="drum"><div class="bav">${av(S.accused)}</div><h2 id="dh">Was ${nm(S.accused)} a spy?</h2><div id="verd" class="drumdots">🥁</div><div id="dn" style="width:100%;display:flex;flex-direction:column;gap:10px"></div></div>`;
+    h=`<div class="drum" id="drum"><div class="bav">${av(S.accused)}</div><h2 id="dh">${t("wasSpyQ",nm(S.accused))}</h2><div id="verd" class="drumdots">🥁</div><div id="dn" style="width:100%;display:flex;flex-direction:column;gap:10px"></div></div>`;
   }
   else if(s==="twist"){
-    h=`<div class="center"><div class="em">🕵️🕵️</div><h2>Plot twist!</h2><p>That spy guessed wrong, but a second spy is still hiding among you.</p></div><button class="btn big red" onclick="go('vote')">Find the other spy</button>`;
+    h=`<div class="center"><div class="em">🕵️🕵️</div><h2>${t("twistT")}</h2><p>${S.under?t("twistU"):t("twistC")}</p></div><button class="btn big red" onclick="go('vote')">${t("twistB")}</button>`;
   }
   else if(s==="guess"){
-    h=`<h2>${av(S.voted)} ${nm(S.voted)}, where are we?</h2><p>${S.early?"You called it. Guess right for +3.":"Last chance. Guess right and the spies still win."}</p>
-    <div class="list">${placesFor(C.pack).map((p,i)=>[p,i]).sort((x,y)=>x[0][0].localeCompare(y[0][0])).map(([p,i])=>`<button class="chip" onclick="guess(${i})"><span>${p[1]}</span>${p[0]}</button>`).join("")}</div>`;
+    h=`<h2>${av(S.voted)} ${t("whereX",nm(S.voted))}</h2><p>${S.early?t("earlyD"):t("lastD")}</p>
+    <div class="list">${sortPool().map(([p,i])=>`<button class="chip" onclick="guess(${i})"><span>${p.e}</span>${esc(pn(p))}</button>`).join("")}</div>`;
   }
   else if(s==="result"){
-    const sw=S.outcome.w==="spy";
-    h=`<div class="hero"><div class="logo">${sw?"😈":"🎉"}</div><h1 class="${sw?"bad":"good"}">${sw?"Spies win!":"Innocents win!"}</h1><p>${esc(S.outcome.why)} ${S.outcome.line}</p></div>
-    <div class="res"><div class="em">${S.place[1]}</div><p>The place was</p><div class="big">${S.place[0]}</div></div>
-    <div class="lbl">Who was who</div><div class="wl">${rng(C.n).map(i=>{const c=cardOf(i);return `<div class="wr${c.spy?" spyr":""}"><span class="a">${av(i)}</span><span>${nm(i)}</span><small>${c.spy?"🕵️ Spy":"😇 Innocent"}</small></div>`}).join("")}</div>
-    <div class="lbl">Scores${C.target?` · first to ${C.target}`:""}</div>${board(true)}
-    <div class="sticky">${S.champ?`<button class="btn big" onclick="crown()">🏆 Crown the champion</button>`:`<button class="btn big" onclick="newRound()">▶ Next round</button>`}
-    <div class="row"><button class="btn alt" onclick="share()">📤 Share</button><button class="btn alt" onclick="go('home')">⚙️ Menu</button></div></div>`;
+    const sw=S.outcome.w==="spy",line=(sw?WS:WI)[C.lang][S.outcome.line];
+    h=`<div class="hero"><div class="logo">${sw?"😈":"🎉"}</div><h1 class="${sw?"bad":"good"}">${sw?t("spiesWin"):t("innWin")}</h1><p>${esc(t(...S.outcome.why))} ${line}</p></div>
+    <div class="res"><div class="em">${S.place.e}</div><p>${t("placeWas")}</p><div class="big">${esc(pn(S.place))}</div>${S.under?`<p class="spyhad">${t("spyHad")}: <b>${S.spyPlace.e} ${esc(pn(S.spyPlace))}</b></p>`:""}</div>
+    <div class="lbl">${t("whoWho")}</div><div class="wl">${rng(C.n).map(i=>{const c=cardOf(i);return `<div class="wr${c.spy?" spyr":""}"><span class="a">${av(i)}</span><span>${nm(i)}</span><small>${c.spy?t("lSpy"):t("lInn")}</small></div>`}).join("")}</div>
+    <div class="lbl">${t("scores")}${C.target?t("firstTo",C.target):""}</div>${board(true)}
+    ${!S.champ?`<button class="link" onclick="crown()">${t("endMatch")}</button>`:""}
+    <div class="sticky">${S.champ?`<button class="btn big" onclick="crown()">${t("crown")}</button>`:`<button class="btn big" onclick="newRound()">${t("next")}</button>`}
+    <div class="row"><button class="btn alt" onclick="share()">${t("share")}</button><button class="btn alt" onclick="go('home')">${t("menu")}</button></div></div>`;
   }
   else if(s==="champ"){
-    const idx=rng(C.n).sort((a,b)=>S.scores[b]-S.scores[a]),ord=[idx[1],idx[0],idx[2]],cls=["p2","p1","p3"];
-    h=`<div class="hero"><div class="logo">🏆</div><h1>${nm(idx[0])} wins!</h1><p>Champion of spies, liars and detectives.</p></div>
+    const idx=ranking(),ord=[idx[1],idx[0],idx[2]],cls=["p2","p1","p3"],aw=awards();
+    h=`<div class="hero"><div class="logo">🏆</div><h1>${t("champWins",nm(idx[0]))}</h1><p>${t("champSub")}</p></div>
     <div class="podium">${ord.map((p,k)=>`<div class="pod ${cls[k]}"><span class="a">${av(p)}</span><span class="n">${nm(p)}</span><div class="bar">${S.scores[p]}</div></div>`).join("")}</div>
-    <div class="sticky"><button class="btn big" onclick="newMatch()">🔁 New match</button><button class="btn alt" onclick="share()">📤 Brag about it</button></div>`;
+    ${aw.length?`<div class="lbl">${t("awardsT")}</div><div class="wl">${aw.map((a,k)=>`<div class="aw" style="animation-delay:${.8+k*.25}s"><span class="ai">${av(a.p)}</span><div><b>${a.title}</b><small>${nm(a.p)} · ${a.desc}</small></div></div>`).join("")}</div>`:""}
+    <div class="sticky"><button class="btn big" onclick="newMatch()">${t("newMatch")}</button><div class="row"><button class="btn alt" onclick="shareImg()">${t("imgBtn")}</button><button class="btn alt" onclick="share()">${t("txtBtn")}</button></div></div>`;
   }
-  $("app").innerHTML=h;window.scrollTo(0,0);
+  $("app").innerHTML=h;
+  if(S.keep)S.keep=false;else window.scrollTo(0,0);
   const fl=$("fly");
   if(fl&&S.from){const r=fl.getBoundingClientRect(),F=S.from;S.from=null;
     fl.style.transformOrigin="0 0";fl.style.transition="none";
     fl.style.transform=`translate(${F.left-r.left}px,${F.top-r.top}px) scale(${F.width/r.width},${F.height/r.height})`;
     void fl.offsetWidth;fl.style.transition="transform .5s cubic-bezier(.2,.8,.2,1)";fl.style.transform="none";}
 }
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&["timer","peek","peekwho","spywho"].includes(S.screen))wake()});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&["timer","peek","peekwho","spywho","places"].includes(S.screen))wake()});
+applyLang();
 render();
 if("serviceWorker" in navigator&&location.protocol.startsWith("http")){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))}
+
 </script>
 </body>
 </html>
