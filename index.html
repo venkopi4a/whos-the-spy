@@ -190,6 +190,22 @@ input::placeholder{color:#5d7090}
 .aw .ai{font-size:1.9rem;flex:none}.aw b{display:block;color:var(--accent)}.aw small{color:var(--mute)}
 input::placeholder{color:#5d7090}
 @media (prefers-reduced-motion:reduce){.aw{animation:none}}
+
+/* v5 additions */
+.rg{display:flex;gap:8px}
+.tbar .btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.78rem;padding:8px 2px;min-height:58px}
+.tbar .btn .i{font-size:1.25rem;line-height:1}
+.tin{width:100%;font:inherit;font-size:1rem;padding:14px 12px;border-radius:12px;border:1px solid var(--line);background:var(--deep);color:var(--text);-webkit-user-select:text;user-select:text}
+.prow .pnum{width:22px;text-align:center;color:var(--mute);font-weight:700;flex:none}
+.pack.new{border-style:dashed;color:var(--mute);align-items:center;justify-content:center;text-align:center}
+.pack.new .pi{color:var(--accent)}
+.list.ro .chip{cursor:default}
+.steps b{color:var(--text)}
+.spyhad{margin-top:6px}.spyhad b{color:var(--text)}
+.aw{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(240,183,62,.08);border:1px solid rgba(240,183,62,.35);animation:pop .4s ease both}
+.aw .ai{font-size:1.9rem;flex:none}.aw b{display:block;color:var(--accent)}.aw small{color:var(--mute)}
+input::placeholder{color:#5d7090}
+@media (prefers-reduced-motion:reduce){.aw{animation:none}}
 </style>
 </head>
 <body>
@@ -641,6 +657,7 @@ function flipStage(p,c){
 }
 function render(){
   let h="";const s=S.screen;
+  const same=s===S.lastScreen,keepY=window.scrollY,pk=document.querySelector(".packs"),keepX=pk?pk.scrollLeft:0;
   if(s==="tut"){
     const tu=TUT[C.lang]||TUT.en,x=tu[S.tut];
     h=`<div class="top">${flagBtn()}<button class="link" onclick="tutDone()">${t("skip")}</button></div>
@@ -759,7 +776,10 @@ function render(){
     <div class="sticky"><button class="btn big" onclick="newMatch()">${t("newMatch")}</button><div class="row"><button class="btn alt" onclick="shareImg()">${t("imgBtn")}</button><button class="btn alt" onclick="share()">${t("txtBtn")}</button></div></div>`;
   }
   $("app").innerHTML=h;
-  if(S.keep)S.keep=false;else window.scrollTo(0,0);
+  if(S.keep)S.keep=false;
+  else if(same){window.scrollTo(0,keepY);const np=document.querySelector(".packs");if(np)np.scrollLeft=keepX}
+  else window.scrollTo(0,0);
+  S.lastScreen=s;
   const fl=$("fly");
   if(fl&&S.from){const r=fl.getBoundingClientRect(),F=S.from;S.from=null;
     fl.style.transformOrigin="0 0";fl.style.transition="none";
