@@ -16,12 +16,12 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap">
 <style>
 :root{--bg:#0f1a2a;--panel:#18273d;--deep:#0c1524;--line:#2c4261;--text:#eaf0f7;--mute:#8fa3bd;--accent:#f0b73e;--spy:#ff5a5f;--ok:#4fd1a5;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+box-sizing:border-box;--safe-b:env(safe-area-inset-bottom,0px);--bottom-gap:calc(26px + var(--safe-b))}
 *,*:before,*:after{box-sizing:inherit}
 html{color-scheme:dark;scroll-padding-top:env(safe-area-inset-top,0px)}
 html,body{margin:0;min-height:100%}
 body{background:radial-gradient(120% 60% at 50% -10%,#1f3558 0,var(--bg) 60%) fixed,var(--bg);color:var(--text);font-family:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;-webkit-tap-highlight-color:transparent;touch-action:manipulation;-webkit-user-select:none;user-select:none}
-#app{max-width:480px;margin:0 auto;padding:14px 16px 24px;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;gap:14px}
+#app{max-width:480px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top,0px)) 20px var(--bottom-gap);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;gap:14px}
 h1{font-size:2.3rem;line-height:1;margin:4px 0 0;font-weight:800;letter-spacing:-.02em}
 h2{font-size:1.5rem;line-height:1.12;margin:0;font-weight:800}
 p{margin:0;color:var(--mute);line-height:1.45}
@@ -56,7 +56,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2
 .pack{flex:0 0 auto;min-width:104px;scroll-snap-align:start;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--deep);color:var(--text);font:inherit;text-align:left;display:flex;flex-direction:column;gap:2px;cursor:pointer}
 .pack.on{border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
 .pack .pi{font-size:1.6rem}.pack small{color:var(--mute)}
-.sticky{position:sticky;bottom:0;padding:14px 0 4px;margin-top:auto;background:linear-gradient(rgba(15,26,42,0),var(--bg) 40%);display:flex;flex-direction:column;gap:10px}
+.sticky{position:sticky;bottom:0;padding:16px 0 var(--bottom-gap);margin-top:auto;margin-bottom:calc(-1 * var(--bottom-gap));background:linear-gradient(rgba(15,26,42,0),var(--bg) 40%);display:flex;flex-direction:column;gap:10px}
 .link{background:none;border:0;color:var(--mute);font:inherit;font-weight:600;text-decoration:underline;padding:10px;cursor:pointer}
 .center{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:16px}
 .center .em{font-size:4.6rem;line-height:1;animation:bounce 1.6s ease-in-out infinite}
@@ -70,6 +70,9 @@ background:radial-gradient(circle at 50% 45%,#2a4777 0,#16263f 70%);display:flex
 .card:before{content:"";position:absolute;inset:7px;border:1px solid rgba(240,183,62,.45);border-radius:11px}
 .card .eye{font-size:1.9rem}.card .num{font-weight:800;font-size:1.2rem;color:var(--accent)}
 .card:active{filter:brightness(1.35)}
+.cards.shuffling{pointer-events:none}
+.cards.shuffling .cw{animation:none!important}
+.btn[disabled]{opacity:.5}
 .slot{width:100%;aspect-ratio:3/4.2;border-radius:16px;border:2px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.9rem;gap:4px;text-align:center;padding:4px}
 .slot small{font-size:.66rem;color:var(--mute);line-height:1.2}
 .cards.deal .cw{animation:deal .45s ease both}
@@ -290,12 +293,40 @@ function pick(i,el){
   buzz(20);beep(420,.08);S.from=el.getBoundingClientRect();
   S.cards[i].takenBy=S.turn;S.sel=i;S.flipped=false;go("reveal");
 }
+let shuffling=false;
 function shuf(){
+  if(shuffling)return;
   const idx=rng(C.n).filter(i=>S.cards[i].takenBy===null);
   const deck=shuffle(idx.map(k=>({spy:S.cards[k].spy,role:S.cards[k].role})));
   idx.forEach((k,j)=>{S.cards[k].spy=deck[j].spy;S.cards[k].role=deck[j].role});
-  const c=document.querySelector(".cards");c.classList.remove("shuf","deal");void c.offsetWidth;c.classList.add("shuf");
-  buzz([15,30,15,30,15]);[0,1,2,3].forEach(j=>setTimeout(()=>beep(250+j*60,.05,"square"),j*70));
+  const box=document.querySelector(".cards"),btn=$("shufBtn");
+  const wraps=[...box.querySelectorAll(".cw")].filter(w=>w.querySelector(".card"));
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce||!wraps.length||!wraps[0].animate){buzz(30);beep(400,.08);toast("Shuffled!");return}
+  shuffling=true;box.classList.remove("deal");box.classList.add("shuffling");if(btn)btn.disabled=true;
+  const br=box.getBoundingClientRect(),cx=br.left+br.width/2,cy=br.top+br.height/2;
+  const done=wraps.map((w,k)=>{
+    const r=w.getBoundingClientRect(),dx=cx-(r.left+r.width/2),dy=cy-(r.top+r.height/2)-k*3;
+    const side=k%2?1:-1,j=()=>(Math.random()*10-5).toFixed(1);
+    w.style.zIndex=10+k;
+    return w.animate([
+      {transform:"translate(0,0) rotate(0deg) scale(1)"},
+      {transform:`translate(${dx}px,${dy}px) rotate(${j()}deg) scale(.92)`,offset:.22},
+      {transform:`translate(${dx+side*46}px,${dy-10}px) rotate(${side*15}deg) scale(.92)`,offset:.34},
+      {transform:`translate(${dx}px,${dy}px) rotate(${j()}deg) scale(.92)`,offset:.44},
+      {transform:`translate(${dx-side*46}px,${dy-10}px) rotate(${-side*15}deg) scale(.92)`,offset:.54},
+      {transform:`translate(${dx}px,${dy}px) rotate(${j()}deg) scale(.92)`,offset:.64},
+      {transform:`translate(${dx}px,${dy-24}px) rotate(0deg) scale(1.02)`,offset:.72},
+      {transform:"translate(0,0) rotate(0deg) scale(1)"}
+    ],{duration:1400,delay:k*40,easing:"cubic-bezier(.45,.05,.3,1)",fill:"none"}).finished;
+  });
+  beep(220,.25,"sawtooth");buzz(20);
+  for(let t=0;t<18;t++)setTimeout(()=>{beep(300+Math.random()*250,.03,"square");if(t%3===0)buzz(6)},420+t*28);
+  setTimeout(()=>{beep(140,.12);buzz(25)},1150);
+  Promise.all(done).catch(()=>{}).then(()=>{
+    wraps.forEach(w=>w.style.zIndex="");box.classList.remove("shuffling");
+    if(btn)btn.disabled=false;shuffling=false;beep(520,.08);buzz(15);
+  });
 }
 function flip(){
   const f=$("fi");S.flipped=!S.flipped;f.classList.toggle("up",S.flipped);
@@ -450,7 +481,7 @@ function render(){
     const w=C.n===4?"calc(50% - 5px)":C.n>=7?"calc(25% - 8px)":"calc(33.33% - 7px)";
     const cs=rng(C.n).map(i=>{const t=S.cards[i].takenBy;return `<div class="cw" style="width:${w};animation-delay:${i*70}ms">${t!==null?`<div class="slot"><span>${av(t)}</span><small>${nm(t)}</small></div>`:`<button class="card" aria-label="Card ${i+1}" onclick="pick(${i},this)"><span class="eye">👁️</span><span class="num">${i+1}</span></button>`}</div>`}).join("");
     h=bar()+dots()+`<div class="hint"><h2>${av(S.turn)} ${nm(S.turn)}, tap a card</h2></div><div class="cards${S.turn===0?" deal":""}">${cs}</div>`+
-      (C.n-S.turn>1?`<button class="btn alt" onclick="shuf()">🔀 Shuffle the cards</button>`:`<p class="hint">Last card left. Tap it.</p>`);
+      (C.n-S.turn>1?`<button class="btn alt" id="shufBtn" onclick="shuf()">🔀 Shuffle the cards</button>`:`<p class="hint">Last card left. Tap it.</p>`);
   }
   else if(s==="reveal"){
     h=bar()+dots()+flipStage(S.turn,S.cards[S.sel])+`<p class="hint" id="tip">Tap the card to flip it.</p><button class="btn" id="hp" style="visibility:hidden" onclick="hide()">Got it, hide it</button>`;
