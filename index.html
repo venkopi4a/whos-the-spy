@@ -95,7 +95,6 @@ background:radial-gradient(circle at 50% 45%,#2a4777 0,#16263f 70%);display:flex
 .face.spy{background:linear-gradient(160deg,#4a1a20,#25090d);border:3px solid var(--spy)}
 .face .em{font-size:4.6rem;line-height:1}
 .face .big{font-size:2.2rem;font-weight:800;line-height:1.05}
-.role{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 14px;font-weight:700;color:var(--text)}
 .hint{text-align:center}
 .ring{position:relative;width:190px;height:190px;margin:0 auto}
 .ring svg{transform:rotate(-90deg);width:100%;height:100%}
@@ -168,47 +167,9 @@ background:radial-gradient(circle at 50% 45%,#2a4777 0,#16263f 70%);display:flex
 <script>
 // ---------- CONTENT ----------
 const PACKS={
-classic:{name:"Classic",icon:"🌍",p:[
-["Beach","🏖️","Lifeguard|Tourist|Ice cream seller|Surfer|Sandcastle kid|Sunburned dad"],
-["School","🏫","Teacher|Student|Janitor|Principal|Lunch lady|Kid who forgot homework"],
-["Hospital","🏥","Doctor|Nurse|Patient|Surgeon|Visitor with flowers|Guy with a broken leg"],
-["Airport","✈️","Pilot|Flight attendant|Security guard|Tourist|Lost luggage guy|Duty-free seller"],
-["Supermarket","🛒","Cashier|Shopper|Security guard|Shelf stacker|Free sample lady|Kid crying for candy"],
-["Cinema","🎬","Popcorn seller|Couple on a date|Ticket checker|Loud chewer|Film critic|Guy who fell asleep"],
-["Gym","🏋️","Personal trainer|Bodybuilder|Total beginner|Receptionist|Mirror selfie guy|Guy who never wipes the bench"],
-["Zoo","🦁","Zookeeper|Tourist|Vet|Kid with a balloon|Photographer|Escaped monkey"],
-["Restaurant","🍝","Chef|Waiter|Customer|Food critic|Dishwasher|Guy splitting the bill"],
-["Train station","🚆","Conductor|Passenger|Ticket seller|Late commuter|Street musician|Pigeon"],
-["Library","📚","Librarian|Student|Book nerd|Sleeping guy|Loud whisperer|Kid in the comics section"],
-["Farm","🚜","Farmer|Tractor driver|Vet|Milkmaid|City tourist|Grumpy goat"],
-["Mountains","⛰️","Hiker|Mountain guide|Skier|Photographer|Lost tourist|Hut owner"],
-["Swimming pool","🏊","Lifeguard|Swimmer|Kid with floaties|Coach|Diver|Cannonball guy"]]},
-bg:{name:"Bulgaria",icon:"🇧🇬",p:[
-["Vitosha","🏔️","Hiker|Skier|Grandpa picking herbs|Hut owner|Mountain rescuer|Student skipping class"],
-["Sunny Beach","🏖️","Party tourist|Bartender|Promoter|Lifeguard|Corn seller|Sunburned tourist"],
-["Rila Monastery","⛪","Monk|Tourist|Priest|Pilgrim|Souvenir seller|Tour guide"],
-["Sofia metro","🚇","Driver|Commuter|Ticket inspector|Student|Street musician|Guy running for the train"],
-["Bansko ski slope","🎿","Ski instructor|Snowboarder|Beginner on the floor|Lift operator|Après-ski DJ|Hot wine seller"],
-["Plovdiv Old Town","🏛️","Artist|Tourist|Café owner|Tour guide|Photographer|Couple on a date"],
-["Grandma's village house","🏡","Grandma|Grandpa|Grandkid|Neighbour|Rakia maker|Chicken"],
-["Mehana","🍷","Waiter|Folk singer|Chef|Drunk uncle|Birthday guest|Tourist"],
-["Open-air market","🥕","Vegetable seller|Grandma shopper|Haggler|Cheese seller|Pickpocket|Kid with a balloon"],
-["Bulgarian wedding","💍","Bride|Groom|Best man|Horo dancer|DJ|Crying mother-in-law"],
-["Grill house","🍖","Grill master|Hungry customer|Waiter|Delivery guy|Cashier|Guy ordering 10 kebapcheta"],
-["Black Sea camping","⛺","Camper|Surfer|Guitar player|Fisherman|Campsite owner|Guy who forgot the tent"]]},
-chaos:{name:"Chaos",icon:"🤪",p:[
-["Pirate ship","🏴‍☠️","Captain|Cook|Parrot|Prisoner|Lookout|Treasure hunter"],
-["Space station","🚀","Astronaut|Commander|Scientist|Alien stowaway|Space tourist|Engineer"],
-["Haunted house","👻","Ghost|Ghost hunter|Scared teenager|Vampire butler|Real estate agent|Brave grandma"],
-["Prison","🔒","Prisoner|Guard|Warden|Lawyer|Cook|Guy planning an escape"],
-["Circus","🎪","Clown|Juggler|Lion tamer|Acrobat|Ringmaster|Popcorn seller"],
-["Music festival","🎧","DJ|Raver|Security|Bartender|Lost friend|Guy with a giant flag"],
-["Zombie apocalypse","🧟","Survivor|Zombie|Scientist|Soldier|Toilet paper hoarder|Hero with a bat"],
-["Dinosaur park","🦖","Ranger|Scientist|Tourist|Baby dinosaur|Guide|Guy who touched the fence"],
-["Submarine","⚓","Captain|Sonar operator|Cook|Engineer|Scared rookie|Diver"],
-["Casino","🎰","Dealer|Gambler|Bodyguard|Millionaire|Waitress|Guy counting cards"],
-["Kids' birthday party","🎂","Birthday kid|Clown|Parent|Magician|Kid who ate all the cake|Bored teenager"],
-["Talent show","🎤","Judge|Contestant|Host|Crying fan|Camera guy|Guy who can only whistle"]]}
+classic:{name:"Classic",icon:"🌍",p:[["Beach", "🏖️"], ["School", "🏫"], ["Hospital", "🏥"], ["Airport", "✈️"], ["Supermarket", "🛒"], ["Cinema", "🎬"], ["Gym", "🏋️"], ["Zoo", "🦁"], ["Restaurant", "🍝"], ["Train station", "🚆"], ["Library", "📚"], ["Farm", "🚜"], ["Mountains", "⛰️"], ["Swimming pool", "🏊"], ["Bank", "🏦"], ["Police station", "🚓"], ["Hotel", "🏨"], ["Cruise ship", "🛳️"], ["Amusement park", "🎢"], ["Football stadium", "🏟️"], ["Hairdresser", "💇"], ["Car wash", "🧽"], ["Office", "💼"], ["Museum", "🖼️"], ["Bowling alley", "🎳"], ["Petrol station", "⛽"], ["Aquarium", "🐠"], ["Fire station", "🚒"], ["Pharmacy", "💊"], ["Nightclub", "🪩"], ["Bakery", "🥐"], ["Dentist", "🦷"], ["Theatre", "🎭"], ["Playground", "🛝"], ["Laundromat", "🧺"], ["Furniture store", "🛋️"]]},
+bg:{name:"Bulgaria",icon:"🇧🇬",p:[["Vitosha", "🏔️"], ["Sunny Beach", "🏖️"], ["Rila Monastery", "⛪"], ["Sofia metro", "🚇"], ["Bansko ski slope", "🎿"], ["Plovdiv Old Town", "🏛️"], ["Grandma's village house", "🏡"], ["Mehana", "🍷"], ["Open-air market", "🥕"], ["Bulgarian wedding", "💍"], ["Grill house", "🍖"], ["Black Sea camping", "⛺"], ["Seven Rila Lakes", "🏞️"], ["Belogradchik Rocks", "🪨"], ["Alexander Nevsky Cathedral", "🔔"], ["NDK", "🏢"], ["Varna Sea Garden", "🌳"], ["Rose Valley", "🌹"], ["Nessebar Old Town", "🏘️"], ["Buzludzha", "🛸"], ["Kukeri festival", "👹"], ["Rakia distillery", "🥃"], ["Marshrutka", "🚐"], ["Panel block", "🏚️"], ["Mineral spa", "♨️"], ["Banitsa bakery", "🥧"]]},
+chaos:{name:"Chaos",icon:"🤪",p:[["Pirate ship", "🏴‍☠️"], ["Space station", "🚀"], ["Haunted house", "👻"], ["Prison", "🔒"], ["Circus", "🎪"], ["Music festival", "🎧"], ["Zombie apocalypse", "🧟"], ["Dinosaur park", "🦖"], ["Submarine", "⚓"], ["Casino", "🎰"], ["Kids' birthday party", "🎂"], ["Talent show", "🎤"], ["Wizard school", "🧙"], ["Superhero HQ", "🦸"], ["Volcano lair", "🌋"], ["Desert island", "🏝️"], ["Medieval castle", "🏰"], ["Wild West saloon", "🤠"], ["Alien spaceship", "👽"], ["Ninja dojo", "🥷"], ["Candy factory", "🍭"], ["Underwater city", "🧜"], ["Jungle expedition", "🌴"], ["Reality TV house", "📺"], ["Santa's workshop", "🎅"], ["Viking raid", "⚔️"]]}
 };
 const POOL=[["🚽","Toilet Steve"],["🦆","Duck Lips"],["🍗","Lord Nugget"],["🥵","Sweaty Pete"],["🥄","Big Spoon"],["💦","Moist Carl"],["🐐","Goat Brain"],["🥚","Wobbly Egg"],
 ["🧦","Stinky Sock"],["🐌","Speedy Snail"],["🥒","Pickle Pants"],["🧻","Paper Paul"],["🐷","Piggy Sue"],["🤡","Bonkers Bob"],["🥔","Couch Potato"],["🍝","Spaghetti Legs"],
@@ -217,7 +178,7 @@ const QS=["What do you usually wear here?","How did you get here today?","What's
 const WS=["The spy fooled everyone. Suspiciously well.","Nobody suspected a thing. Embarrassing.","Spy level: international.","Trust no one. Especially them."];
 const WI=["Detectives! Absolute legends.","The spy has been exposed. Dramatically.","Nothing gets past this table.","Sherlock would be proud."];
 const TUT=[["📱","Pass the phone","Each player taps a face-down card in secret, then passes the phone on."],
-["🗺️","Everyone knows the place… almost","All players see the same place and a funny role. The spy only sees that they're the spy."],
+["🗺️","Everyone knows the place… almost","Everyone sees the same secret place. The spy only sees that they're the spy."],
 ["💬","Ask sneaky questions","Take turns asking each other questions. Prove you know the place without saying it. Stuck? The app suggests a question."],
 ["🗳️","Catch the spy","Vote someone out when you're ready. A caught spy can still win by guessing the place, and the spy can try a guess at any time."]];
 
@@ -278,9 +239,8 @@ function newRound(){
   do{p=list[R(list.length)]}while(list.length>1&&S.lastPlace===p[0]);
   S.place=p;S.lastPlace=p[0];
   S.ns=(C.spyMode===2&&C.n>=5&&Math.random()<.5)?2:1;
-  const roles=shuffle(p[2].split("|")),deck=[];
-  for(let i=0;i<C.n;i++)deck.push(i<S.ns?{spy:true,role:""}:{spy:false,role:roles[(i-S.ns)%roles.length]});
-  S.cards=shuffle(deck).map(c=>({spy:c.spy,role:c.role,takenBy:null}));
+  const deck=[];for(let i=0;i<C.n;i++)deck.push(i<S.ns);
+  S.cards=shuffle(deck).map(spy=>({spy,takenBy:null}));
   S.turn=0;S.round++;saveM();S.out=[];S.caught=0;S.voted=null;S.early=false;S.flipped=false;S.paused=false;S.quitArm=false;
   wake();buzz(30);jingle([392,523]);go("pass");
 }
@@ -297,8 +257,8 @@ let shuffling=false;
 function shuf(){
   if(shuffling)return;
   const idx=rng(C.n).filter(i=>S.cards[i].takenBy===null);
-  const deck=shuffle(idx.map(k=>({spy:S.cards[k].spy,role:S.cards[k].role})));
-  idx.forEach((k,j)=>{S.cards[k].spy=deck[j].spy;S.cards[k].role=deck[j].role});
+  const deck=shuffle(idx.map(k=>S.cards[k].spy));
+  idx.forEach((k,j)=>{S.cards[k].spy=deck[j]});
   const box=document.querySelector(".cards"),btn=$("shufBtn");
   const wraps=[...box.querySelectorAll(".cw")].filter(w=>w.querySelector(".card"));
   const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -432,7 +392,7 @@ function board(delta){
 function face(c){
   return c.spy
     ?`<div class="face front spy"><div class="em">🕵️</div><div class="big">You are the spy</div><p>You don't know the place. Ask vague questions, listen for clues, and blend in.</p></div>`
-    :`<div class="face front place"><div class="em">${S.place[1]}</div><p>The place is</p><div class="big">${S.place[0]}</div><div class="role">Your role: ${c.role}</div><p class="small">Prove you know it without giving it away.</p></div>`;
+    :`<div class="face front place"><div class="em">${S.place[1]}</div><p>The place is</p><div class="big">${S.place[0]}</div><p class="small">Prove you know it without giving it away.</p></div>`;
 }
 function flipStage(p,c){
   return `<div class="stage"><div id="fly"><div class="fi" id="fi" onclick="flip()" role="button" aria-label="Flip your card"><div class="face back"><div class="eye">👁️</div><b>${av(p)} ${nm(p)}</b><p>Tap to flip</p></div>${face(c)}</div></div></div>`;
@@ -516,13 +476,13 @@ function render(){
   }
   else if(s==="guess"){
     h=`<h2>${av(S.voted)} ${nm(S.voted)}, where are we?</h2><p>${S.early?"You called it. Guess right for +3.":"Last chance. Guess right and the spies still win."}</p>
-    <div class="list">${placesFor(C.pack).map((p,i)=>`<button class="chip" onclick="guess(${i})"><span>${p[1]}</span>${p[0]}</button>`).join("")}</div>`;
+    <div class="list">${placesFor(C.pack).map((p,i)=>[p,i]).sort((x,y)=>x[0][0].localeCompare(y[0][0])).map(([p,i])=>`<button class="chip" onclick="guess(${i})"><span>${p[1]}</span>${p[0]}</button>`).join("")}</div>`;
   }
   else if(s==="result"){
     const sw=S.outcome.w==="spy";
     h=`<div class="hero"><div class="logo">${sw?"😈":"🎉"}</div><h1 class="${sw?"bad":"good"}">${sw?"Spies win!":"Innocents win!"}</h1><p>${esc(S.outcome.why)} ${S.outcome.line}</p></div>
     <div class="res"><div class="em">${S.place[1]}</div><p>The place was</p><div class="big">${S.place[0]}</div></div>
-    <div class="lbl">Who was who</div><div class="wl">${rng(C.n).map(i=>{const c=cardOf(i);return `<div class="wr${c.spy?" spyr":""}"><span class="a">${av(i)}</span><span>${nm(i)}</span><small>${c.spy?"🕵️ Spy":c.role}</small></div>`}).join("")}</div>
+    <div class="lbl">Who was who</div><div class="wl">${rng(C.n).map(i=>{const c=cardOf(i);return `<div class="wr${c.spy?" spyr":""}"><span class="a">${av(i)}</span><span>${nm(i)}</span><small>${c.spy?"🕵️ Spy":"😇 Innocent"}</small></div>`}).join("")}</div>
     <div class="lbl">Scores${C.target?` · first to ${C.target}`:""}</div>${board(true)}
     <div class="sticky">${S.champ?`<button class="btn big" onclick="crown()">🏆 Crown the champion</button>`:`<button class="btn big" onclick="newRound()">▶ Next round</button>`}
     <div class="row"><button class="btn alt" onclick="share()">📤 Share</button><button class="btn alt" onclick="go('home')">⚙️ Menu</button></div></div>`;
